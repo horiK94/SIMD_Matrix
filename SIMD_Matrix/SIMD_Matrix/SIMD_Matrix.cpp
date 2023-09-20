@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+using namespace std;
 
 class Float4
 {
@@ -20,9 +21,29 @@ public:
 	{
 	}
 
-	Float4 operator+(Float4 m)
+	Float4 operator+(const Float4 m) const
 	{
 		return Float4(x + m.x, y + m.y, z + m.z, w + m.w);
+	}
+
+	Float4 operator-(const Float4 m) const
+	{
+		return Float4(x - m.x, y - m.y, z - m.z, w - m.w);
+	}
+
+	friend Float4 operator*(const float k, const Float4& v)
+	{
+		return Float4(k * v.x, k * v.y, k * v.z, k * v.w);
+	}
+
+	Float4 operator/(const float k) const
+	{
+		return (1 / k) * *this;
+	}
+
+	static float Dot(const Float4 v1, const Float4 v2)
+	{
+		return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z + v1.w * v2.w;
 	}
 };
 
@@ -81,6 +102,10 @@ int main()
 {
 	Float4 a = Float4(1, 2, 3, 4);
 	Float4 b = Float4(-2.5f, 5, -7.5f, 10);
-	std::cout << (a + b) << std::endl;
-}
 
+	cout << (a + b) << endl;
+	cout << (a - b) << endl;
+	cout << (0.5 * a) << endl;
+	cout << (a / 2) << endl;
+	cout << (Float4::Dot(a, b)) << endl;
+}
