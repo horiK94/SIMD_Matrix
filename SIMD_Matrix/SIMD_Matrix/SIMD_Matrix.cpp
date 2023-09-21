@@ -26,6 +26,12 @@ public:
 		return Float4(x + m.x, y + m.y, z + m.z, w + m.w);
 	}
 
+	Float4 operator+=(const Float4 v)
+	{
+		*this = *this + v;
+		return *this;
+	}
+
 	Float4 operator+() const
 	{
 		return *this;
@@ -34,6 +40,12 @@ public:
 	Float4 operator-(const Float4 m) const
 	{
 		return Float4(x - m.x, y - m.y, z - m.z, w - m.w);
+	}
+
+	Float4 operator-=(const Float4 v)
+	{
+		*this = *this - v;
+		return *this;
 	}
 
 	Float4 operator-() const
@@ -46,9 +58,34 @@ public:
 		return Float4(k * v.x, k * v.y, k * v.z, k * v.w);
 	}
 
+	Float4 operator*=(const float k)
+	{
+		*this = k * *this;
+		return *this;
+	}
+
 	Float4 operator/(const float k) const
 	{
 		return (1 / k) * *this;
+	}
+
+	Float4 operator/=(const float k)
+	{
+		*this = *this / k;
+		return *this;
+	}
+
+	bool operator==(const Float4& v) const
+	{
+		return x == v.x
+			&& y == v.y
+			&& z == v.z
+			&& w == v.w;
+	}
+
+	bool operator!=(const Float4& v) const
+	{
+		return !(*this == v);
 	}
 
 	static float Dot(const Float4 v1, const Float4 v2)
@@ -76,9 +113,15 @@ public:
 	{
 	}
 
-	Float3 operator+(const Float3 m) const
+	Float3 operator+(const Float3 v) const
 	{
-		return Float3(x + m.x, y + m.y, z + m.z);
+		return Float3(x + v.x, y + v.y, z + v.z);
+	}
+
+	Float3 operator+=(const Float3 v)
+	{
+		*this = *this + v;
+		return *this;
 	}
 
 	Float3 operator+() const
@@ -86,9 +129,15 @@ public:
 		return *this;
 	}
 
-	Float3 operator-(const Float3 m) const
+	Float3 operator-(const Float3 v) const
 	{
-		return Float3(x - m.x, y - m.y, z - m.z);
+		return Float3(x - v.x, y - v.y, z - v.z);
+	}
+
+	Float3 operator-=(const Float3 v)
+	{
+		*this = *this - v;
+		return *this;
 	}
 
 	Float3 operator-() const
@@ -101,9 +150,33 @@ public:
 		return Float3(k * v.x, k * v.y, k * v.z);
 	}
 
+	Float3 operator*=(const float k)
+	{
+		*this = k * *this;
+		return *this;
+	}
+
 	Float3 operator/(const float k) const
 	{
 		return (1 / k) * *this;
+	}
+
+	Float3 operator/=(const float k)
+	{
+		*this = *this / k;
+		return *this;
+	}
+
+	bool operator==(const Float3& v) const
+	{
+		return x == v.x
+			&& y == v.y
+			&& z == v.z;
+	}
+
+	bool operator!=(const Float3& v) const
+	{
+		return !(*this == v);
 	}
 
 	static float Dot(const Float3 v1, const Float3 v2)
@@ -190,6 +263,20 @@ int main()
 	cout << (0.5 * a) << endl;
 	cout << (a / 2) << endl;
 	cout << (Float4::Dot(a, b)) << endl;
+	cout << endl;
+	a += b;
+	cout << a << endl;
+	a -= b;
+	cout << a << endl;
+	a *= 2;
+	cout << a << endl;
+	a /= 2;
+	cout << a << endl;
+	cout << (a == Float4(1, 2, 3, 0)) << endl;
+	cout << (a == Float4(1, 2, 3, 4)) << endl;
+	cout << (a != b) << endl;
+	cout << endl;
+	cout << endl;
 
 	Float3 c = Float3(2, 3, 1);
 	Float3 d = Float3(-3, 1, 4);
@@ -202,4 +289,16 @@ int main()
 	cout << (d / 2) << endl;
 	cout << (Float3::Dot(c, d)) << endl;
 	cout << (Float3::Cross(c, d)) << endl;
+	cout << endl;
+	c += d;
+	cout << c << endl;
+	c -= d;
+	cout << c << endl;
+	c *= 2;
+	cout << c << endl;
+	c /= 2;
+	cout << c << endl;
+	cout << (c == Float3(2, 3, 0)) << endl;
+	cout << (c == Float3(2, 3, 1)) << endl;
+	cout << (c != d) << endl;
 }
