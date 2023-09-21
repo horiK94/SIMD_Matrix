@@ -47,6 +47,61 @@ public:
 	}
 };
 
+class Float3
+{
+public:
+	float x;
+	float y;
+	float z;
+
+	Float3() : x(0), y(0), z(0)
+	{
+	}
+
+	Float3(Float4* v) : x(v->x), y(v->y), z(v->z)
+	{
+	}
+
+	Float3(float x, float y, float z) : x(x), y(y), z(z)
+	{
+	}
+
+	Float3 operator+(const Float3 m) const
+	{
+		return Float3(x + m.x, y + m.y, z + m.z);
+	}
+
+	Float3 operator-(const Float3 m) const
+	{
+		return Float3(x - m.x, y - m.y, z - m.z);
+	}
+
+	friend Float3 operator*(const float k, const Float3& v)
+	{
+		return Float3(k * v.x, k * v.y, k * v.z);
+	}
+
+	Float3 operator/(const float k) const
+	{
+		return (1 / k) * *this;
+	}
+
+	static float Dot(const Float3 v1, const Float3 v2)
+	{
+		return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+	}
+
+	static Float3 Cross(const Float3 v1, const Float3 v2)
+	{
+		return Float3(
+			v1.y * v2.z - v1.z * v2.y,
+			v1.z * v2.x - v1.x * v2.z,
+			v1.x * v2.y - v1.y * v2.x
+		);
+	}
+};
+
+
 class Matrix4
 {
 public:
@@ -97,6 +152,11 @@ std::ostream& operator<<(std::ostream& stream, const Float4& v)
 	stream << "(" << v.x << ", " << v.y << ", " << v.z << ", " << v.w << ")";
 	return stream;
 }
+std::ostream& operator<<(std::ostream& stream, const Float3& v)
+{
+	stream << "(" << v.x << ", " << v.y << ", " << v.z << ")";
+	return stream;
+}
 
 int main()
 {
@@ -108,4 +168,14 @@ int main()
 	cout << (0.5 * a) << endl;
 	cout << (a / 2) << endl;
 	cout << (Float4::Dot(a, b)) << endl;
+
+	Float3 c = Float3(2, 3, 1);
+	Float3 d = Float3(-3, 1, 4);
+
+	cout << (c + d) << endl;
+	cout << (c - d) << endl;
+	cout << (3 * c) << endl;
+	cout << (d / 2) << endl;
+	cout << (Float3::Dot(c, d)) << endl;
+	cout << (Float3::Cross(c, d)) << endl;
 }
