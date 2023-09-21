@@ -26,9 +26,19 @@ public:
 		return Float4(x + m.x, y + m.y, z + m.z, w + m.w);
 	}
 
+	Float4 operator+() const
+	{
+		return *this;
+	}
+
 	Float4 operator-(const Float4 m) const
 	{
 		return Float4(x - m.x, y - m.y, z - m.z, w - m.w);
+	}
+
+	Float4 operator-() const
+	{
+		return -1 * *this;
 	}
 
 	friend Float4 operator*(const float k, const Float4& v)
@@ -71,9 +81,19 @@ public:
 		return Float3(x + m.x, y + m.y, z + m.z);
 	}
 
+	Float3 operator+() const
+	{
+		return *this;
+	}
+
 	Float3 operator-(const Float3 m) const
 	{
 		return Float3(x - m.x, y - m.y, z - m.z);
+	}
+
+	Float3 operator-() const
+	{
+		return -1 * *this;
 	}
 
 	friend Float3 operator*(const float k, const Float3& v)
@@ -165,6 +185,8 @@ int main()
 
 	cout << (a + b) << endl;
 	cout << (a - b) << endl;
+	cout << +a << endl;
+	cout << -a << endl;
 	cout << (0.5 * a) << endl;
 	cout << (a / 2) << endl;
 	cout << (Float4::Dot(a, b)) << endl;
@@ -174,6 +196,8 @@ int main()
 
 	cout << (c + d) << endl;
 	cout << (c - d) << endl;
+	cout << +c << endl;
+	cout << -c << endl;
 	cout << (3 * c) << endl;
 	cout << (d / 2) << endl;
 	cout << (Float3::Dot(c, d)) << endl;
