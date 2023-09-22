@@ -1,99 +1,6 @@
 ﻿#include <iostream>
 using namespace std;
 
-class Float4
-{
-public:
-	float x;
-	float y;
-	float z;
-	float w;
-
-	Float4() : x(0), y(0), z(0), w(0)
-	{
-	}
-
-	Float4(Float4* v) : x(v->x), y(v->y), z(v->z), w(v->w)
-	{
-	}
-
-	Float4(float x, float y, float z, float w) : x(x), y(y), z(z), w(w)
-	{
-	}
-
-	Float4 operator+(const Float4 m) const
-	{
-		return Float4(x + m.x, y + m.y, z + m.z, w + m.w);
-	}
-
-	Float4 operator+=(const Float4 v)
-	{
-		*this = *this + v;
-		return *this;
-	}
-
-	Float4 operator+() const
-	{
-		return *this;
-	}
-
-	Float4 operator-(const Float4 m) const
-	{
-		return Float4(x - m.x, y - m.y, z - m.z, w - m.w);
-	}
-
-	Float4 operator-=(const Float4 v)
-	{
-		*this = *this - v;
-		return *this;
-	}
-
-	Float4 operator-() const
-	{
-		return -1 * *this;
-	}
-
-	friend Float4 operator*(const float k, const Float4& v)
-	{
-		return Float4(k * v.x, k * v.y, k * v.z, k * v.w);
-	}
-
-	Float4 operator*=(const float k)
-	{
-		*this = k * *this;
-		return *this;
-	}
-
-	Float4 operator/(const float k) const
-	{
-		return (1 / k) * *this;
-	}
-
-	Float4 operator/=(const float k)
-	{
-		*this = *this / k;
-		return *this;
-	}
-
-	bool operator==(const Float4& v) const
-	{
-		return x == v.x
-			&& y == v.y
-			&& z == v.z
-			&& w == v.w;
-	}
-
-	bool operator!=(const Float4& v) const
-	{
-		return !(*this == v);
-	}
-
-	static float Dot(const Float4 v1, const Float4 v2)
-	{
-		return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z + v1.w * v2.w;
-	}
-};
-
 class Float3
 {
 public:
@@ -105,7 +12,7 @@ public:
 	{
 	}
 
-	Float3(Float4* v) : x(v->x), y(v->y), z(v->z)
+	Float3(Float3* v) : x(v->x), y(v->y), z(v->z)
 	{
 	}
 
@@ -195,6 +102,104 @@ public:
 };
 
 
+class Float4
+{
+public:
+	float x;
+	float y;
+	float z;
+	float w;
+
+	Float4() : x(0), y(0), z(0), w(0)
+	{
+	}
+
+	Float4(Float4* v) : x(v->x), y(v->y), z(v->z), w(v->w)
+	{
+	}
+
+	Float4(float x, float y, float z, float w) : x(x), y(y), z(z), w(w)
+	{
+	}
+
+	Float4(Float3 v, float w) : x(v.x), y(v.y), z(v.z), w(w)
+	{
+
+	}
+
+	Float4 operator+(const Float4 m) const
+	{
+		return Float4(x + m.x, y + m.y, z + m.z, w + m.w);
+	}
+
+	Float4 operator+=(const Float4 v)
+	{
+		*this = *this + v;
+		return *this;
+	}
+
+	Float4 operator+() const
+	{
+		return *this;
+	}
+
+	Float4 operator-(const Float4 m) const
+	{
+		return Float4(x - m.x, y - m.y, z - m.z, w - m.w);
+	}
+
+	Float4 operator-=(const Float4 v)
+	{
+		*this = *this - v;
+		return *this;
+	}
+
+	Float4 operator-() const
+	{
+		return -1 * *this;
+	}
+
+	friend Float4 operator*(const float k, const Float4& v)
+	{
+		return Float4(k * v.x, k * v.y, k * v.z, k * v.w);
+	}
+
+	Float4 operator*=(const float k)
+	{
+		*this = k * *this;
+		return *this;
+	}
+
+	Float4 operator/(const float k) const
+	{
+		return (1 / k) * *this;
+	}
+
+	Float4 operator/=(const float k)
+	{
+		*this = *this / k;
+		return *this;
+	}
+
+	bool operator==(const Float4& v) const
+	{
+		return x == v.x
+			&& y == v.y
+			&& z == v.z
+			&& w == v.w;
+	}
+
+	bool operator!=(const Float4& v) const
+	{
+		return !(*this == v);
+	}
+
+	static float Dot(const Float4 v1, const Float4 v2)
+	{
+		return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z + v1.w * v2.w;
+	}
+};
+
 class Matrix4
 {
 public:
@@ -253,8 +258,10 @@ std::ostream& operator<<(std::ostream& stream, const Float3& v)
 
 int main()
 {
-	Float4 a = Float4(1, 2, 3, 4);
-	Float4 b = Float4(-2.5f, 5, -7.5f, 10);
+	Float4 a(1, 2, 3, 4);
+	Float4 b(-2.5f, 5, -7.5f, 10);
+
+	cout << Float4(Float3(1, 2, 3), -1) << endl;
 
 	cout << (a + b) << endl;
 	cout << (a - b) << endl;
@@ -278,8 +285,8 @@ int main()
 	cout << endl;
 	cout << endl;
 
-	Float3 c = Float3(2, 3, 1);
-	Float3 d = Float3(-3, 1, 4);
+	Float3 c(2, 3, 1);
+	Float3 d(-3, 1, 4);
 
 	cout << (c + d) << endl;
 	cout << (c - d) << endl;
