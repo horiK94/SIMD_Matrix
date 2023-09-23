@@ -96,3 +96,9 @@ Float3 Float3::Cross(const Float3 v1, const Float3 v2)
 		v1.x * v2.y - v1.y * v2.x
 	);
 }
+
+std::ostream& operator<<(std::ostream& stream, const Float3& v)
+{
+	stream << "(" << v.x << ", " << v.y << ", " << v.z << ")";
+	return stream;
+}

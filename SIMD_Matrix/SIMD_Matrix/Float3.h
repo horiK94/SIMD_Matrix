@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+
 class Float3
 {
 public:
@@ -27,3 +29,4 @@ public:
 
 	static Float3 Cross(const Float3 v1, const Float3 v2);
 };
+std::ostream& operator<<(std::ostream& stream, const Float3& v);

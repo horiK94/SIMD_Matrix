@@ -185,11 +185,7 @@ std::ostream& operator<<(std::ostream& stream, const Float4& v)
 	stream << "(" << v.x << ", " << v.y << ", " << v.z << ", " << v.w << ")";
 	return stream;
 }
-std::ostream& operator<<(std::ostream& stream, const Float3& v)
-{
-	stream << "(" << v.x << ", " << v.y << ", " << v.z << ")";
-	return stream;
-}
+
 
 int main()
 {
