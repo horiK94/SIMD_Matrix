@@ -83,6 +83,21 @@ bool Float3::operator!=(const Float3 v) const
 	return !(*this == v);
 }
 
+float Float3::Magnitude()
+{
+	return sqrt(SqrtMagnitude());
+}
+
+float Float3::SqrtMagnitude()
+{
+	return Dot(*this, *this);
+}
+
+void Float3::Normalize()
+{
+	*this /= Magnitude();
+}
+
 float Float3::Dot(const Float3 v1, const Float3 v2)
 {
 	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
@@ -95,6 +110,11 @@ Float3 Float3::Cross(const Float3 v1, const Float3 v2)
 		v1.z * v2.x - v1.x * v2.z,
 		v1.x * v2.y - v1.y * v2.x
 	);
+}
+
+Float3 Float3::Normalize(Float3 v)
+{
+	return v / v.Magnitude();
 }
 
 std::ostream& operator<<(std::ostream& stream, const Float3& v)

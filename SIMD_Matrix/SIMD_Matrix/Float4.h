@@ -27,6 +27,11 @@ public:
 	Float4 operator/=(const float k);
 	bool operator==(const Float4 v) const;
 	bool operator!=(const Float4 v) const;
+
+	float Magnitude();
+	float SqrtMagnitude();
+	void Normalize();
 	static float Dot(const Float4 v1, const Float4 v2);
+	static Float3 Normalize(Float3 v);
 };
 std::ostream& operator<<(std::ostream& stream, const Float4& v);

@@ -88,9 +88,29 @@ bool Float4::operator!=(const Float4 v) const
 	return !(*this == v);
 }
 
+float Float4::Magnitude()
+{
+	return sqrt(SqrtMagnitude());
+}
+
+float Float4::SqrtMagnitude()
+{
+	return Dot(*this, *this);
+}
+
+void Float4::Normalize()
+{
+	*this /= Magnitude();
+}
+
 float Float4::Dot(const Float4 v1, const Float4 v2)
 {
 	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z + v1.w * v2.w;
+}
+
+Float3 Float4::Normalize(Float3 v)
+{
+	return v / v.Magnitude();
 }
 
 std::ostream& operator<<(std::ostream& stream, const Float4& v)
