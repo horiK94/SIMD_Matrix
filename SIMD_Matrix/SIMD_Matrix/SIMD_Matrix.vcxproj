@@ -128,10 +128,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Float3.cpp" />
+    <ClCompile Include="Float4.cpp" />
     <ClCompile Include="SIMD_Matrix.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Float3.h" />
+    <ClInclude Include="Float4.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
