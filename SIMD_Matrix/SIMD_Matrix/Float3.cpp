@@ -49,7 +49,7 @@ Float3 Float3::operator*(const float k) const
 	return Float3(k * x, k * y, k * z);
 }
 
-Float3 operator*(const float k, const Float3& v)
+Float3 operator*(const float k, const Float3 v)
 {
 	return Float3(k * v.x, k * v.y, k * v.z);
 }
@@ -71,14 +71,14 @@ Float3 Float3::operator/=(const float k)
 	return *this;
 }
 
-bool Float3::operator==(const Float3& v) const
+bool Float3::operator==(const Float3 v) const
 {
 	return x == v.x
 		&& y == v.y
 		&& z == v.z;
 }
 
-bool Float3::operator!=(const Float3& v) const
+bool Float3::operator!=(const Float3 v) const
 {
 	return !(*this == v);
 }
