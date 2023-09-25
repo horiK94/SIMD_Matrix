@@ -4,22 +4,18 @@ Float3::Float3() : x(0), y(0), z(0)
 {
 }
 
-Float3::Float3(Float3* v) : x(v->x), y(v->y), z(v->z)
+Float3::Float3(float _x, float _y, float _z) : x(_x), y(_y), z(_z)
 {
 }
 
-Float3::Float3(float x, float y, float z) : x(x), y(y), z(z)
-{
-}
-
-Float3 Float3::operator+(const Float3 v) const
+Float3 Float3::operator+(const Float3& v) const
 {
 	return Float3(x + v.x, y + v.y, z + v.z);
 }
 
-Float3 Float3::operator+=(const Float3 v)
+Float3& Float3::operator+=(const Float3& v)
 {
-	*this = *this + v;
+	*this = Float3(x + v.x, y + v.y, z + v.z);
 	return *this;
 }
 
@@ -28,20 +24,20 @@ Float3 Float3::operator+() const
 	return *this;
 }
 
-Float3 Float3::operator-(const Float3 v) const
+Float3 Float3::operator-(const Float3& v) const
 {
-	return *this + (-v);
+	return Float3(x - v.x, y - v.y, z - v.z);
 }
 
-Float3 Float3::operator-=(const Float3 v)
+Float3& Float3::operator-=(const Float3& v)
 {
-	*this = *this - v;
+	*this = Float3(x - v.x, y - v.y, z - v.z);
 	return *this;
 }
 
 Float3 Float3::operator-() const
 {
-	return -1 * *this;
+	return Float3(-x, -y, -z);
 }
 
 Float3 Float3::operator*(const float k) const
@@ -49,25 +45,25 @@ Float3 Float3::operator*(const float k) const
 	return Float3(k * x, k * y, k * z);
 }
 
-Float3 operator*(const float k, const Float3 v)
+Float3 operator*(const float k, const Float3& v)
 {
 	return Float3(k * v.x, k * v.y, k * v.z);
 }
 
-Float3 Float3::operator*=(const float k)
+Float3& Float3::operator*=(const float k)
 {
-	*this = k * *this;
+	*this = Float3(k * x, k * y, k * z);
 	return *this;
 }
 
 Float3 Float3::operator/(const float k) const
 {
-	return (1 / k) * *this;
+	return Float3(1 / k * x, 1 / k * y, 1 / k * z);
 }
 
-Float3 Float3::operator/=(const float k)
+Float3& Float3::operator/=(const float k)
 {
-	*this = *this / k;
+	*this = Float3(1 / k * x, 1 / k * y, 1 / k * z);
 	return *this;
 }
 

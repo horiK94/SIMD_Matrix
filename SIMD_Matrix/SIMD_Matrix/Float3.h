@@ -1,28 +1,27 @@
 #pragma once
 #include <iostream>
 
-class Float3
+struct Float3
 {
-public:
 	float x;
 	float y;
 	float z;
 
 	Float3();
-	Float3(Float3* v);
+	Float3(const Float3& v) = default;
 	Float3(float x, float y, float z);
-	Float3 operator+(const Float3 v) const;
-	Float3 operator+=(const Float3 v);
+	Float3 operator+(const Float3& v) const;
+	Float3& operator+=(const Float3& v);
 	Float3 operator+() const;
-	Float3 operator-(const Float3 v) const;
-	Float3 operator-=(const Float3 v);
+	Float3 operator-(const Float3& v) const;
+	Float3& operator-=(const Float3& v);
 	Float3 operator-() const;
 	Float3 operator*(const float k) const;
-	friend Float3 operator*(const float k, const Float3 v);
+	friend Float3 operator*(const float k, const Float3& v);
 
-	Float3 operator*=(const float k);
+	Float3& operator*=(const float k);
 	Float3 operator/(const float k) const;
-	Float3 operator/=(const float k);
+	Float3& operator/=(const float k);
 	bool operator==(const Float3 v) const;
 	bool operator!=(const Float3 v) const;
 
