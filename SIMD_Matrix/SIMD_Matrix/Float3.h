@@ -25,6 +25,7 @@ struct Float3
 	Float3 operator/(const float k) const;
 	Float3& operator/=(const float k);
 	bool equal(const Float3& v, const float epsilon = 0.01) const;
+	bool isZero() const;
 
 	float length() const;
 	float squareLength() const;
@@ -112,6 +113,13 @@ inline bool Float3::equal(const Float3& v, const float epsilon) const
 	return std::abs(x - v.x) <= epsilon
 		&& std::abs(y - v.y) <= epsilon
 		&& std::abs(z - v.z) <= epsilon;
+}
+
+inline bool Float3::isZero() const
+{
+	return x == 0
+		&& y == 0
+		&& z == 0;
 }
 
 inline float Float3::length() const
