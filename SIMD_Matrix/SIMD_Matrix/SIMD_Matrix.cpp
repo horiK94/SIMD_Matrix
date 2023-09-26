@@ -1,10 +1,11 @@
 ﻿#include <iostream>
-using namespace std;
 #include "Float3.h"
 #include "Float4.h"
 
 int main()
 {
+	using namespace std;
+
 	Float4 a(1, 2, 3, 4);
 	Float4 b(-2.5f, 5, -7.5f, 10);
 
@@ -53,7 +54,6 @@ int main()
 	cout << c << endl;
 	c /= 2;
 	cout << c << endl;
-	cout << (c == Float3(2, 3, 0)) << endl;
-	cout << (c == Float3(2, 3, 1)) << endl;
-	cout << (c != d) << endl;
+	Float3 e = (c += d) += d;
+	cout << e << endl;
 }
