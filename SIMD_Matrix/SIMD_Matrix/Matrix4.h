@@ -1,9 +1,8 @@
 #pragma once
 #include "Float4.h"
 
-class Matrix4
+struct Matrix4
 {
-public:
 	Float4 rowVec1;
 	Float4 rowVec2;
 	Float4 rowVec3;

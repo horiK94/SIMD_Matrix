@@ -28,9 +28,9 @@ int main()
 	cout << a << endl;
 	a /= 2;
 	cout << a << endl;
-	cout << (a == Float4(1, 2, 3, 0)) << endl;
-	cout << (a == Float4(1, 2, 3, 4)) << endl;
-	cout << (a != b) << endl;
+
+	Float4 f = (a += b) += b;
+	cout << f << endl;
 	cout << endl;
 	cout << endl;
 

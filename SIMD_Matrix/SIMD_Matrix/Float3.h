@@ -29,11 +29,11 @@ struct Float3
 
 	float length() const;
 	float squareLength() const;
-	Float3 normalize();
+	Float3& normalize();
 
 	static float Dot(const Float3& v1, const Float3& v2);
-	static Float3 Cross(const Float3& v1, const Float3& v2);
-	static Float3 Normalize(Float3& v);
+	static Float3 Cross(const Float3 & v1, const Float3 & v2);
+	static Float3 Normalize(const Float3& v);
 };
 std::ostream& operator<<(std::ostream& stream, const Float3& v);
 
@@ -132,7 +132,7 @@ inline float Float3::squareLength() const
 	return x * x + y * y + z * z;
 }
 
-inline Float3 Float3::normalize()
+inline Float3& Float3::normalize()
 {
 	float len = length();
 	float lenInv = 1 / len;
@@ -155,7 +155,7 @@ inline Float3 Float3::Cross(const Float3& v1, const Float3& v2)
 	);
 }
 
-inline Float3 Float3::Normalize(Float3& v)
+inline Float3 Float3::Normalize(const Float3& v)
 {
 	float len = v.length();
 	float lenInv = 1 / len;
