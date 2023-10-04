@@ -6,13 +6,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "ThirdParty/doctest/doctest.h"
 
-//TEST_CASE("zero vector construct")
-//{
-//     //Float4 zeroVec = Float4();
-//     //CHECK(zeroVec.x == 0);
-//	CHECK(1 == 1);
-//}
-
 int main()
 {
 	//テストの実行
@@ -48,27 +41,4 @@ int main()
 	cout << f << endl;
 	cout << endl;
 	cout << endl;
-
-	Float3 c(2, 3, 1);
-	Float3 d(-3, 1, 4);
-
-	cout << (c + d) << endl;
-	cout << (c - d) << endl;
-	cout << +c << endl;
-	cout << -c << endl;
-	cout << (3 * c) << endl;
-	cout << (d / 2) << endl;
-	cout << (Float3::Dot(c, d)) << endl;
-	cout << (Float3::Cross(c, d)) << endl;
-	cout << endl;
-	c += d;
-	cout << c << endl;
-	c -= d;
-	cout << c << endl;
-	c *= 2;
-	cout << c << endl;
-	c /= 2;
-	cout << c << endl;
-	Float3 e = (c += d) += d;
-	cout << e << endl;
 }
