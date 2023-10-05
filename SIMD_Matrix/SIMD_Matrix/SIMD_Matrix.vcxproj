@@ -140,6 +140,7 @@
     <ClInclude Include="Float4.h" />
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="Test_Float3.h" />
+    <ClInclude Include="Test_Float4.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
