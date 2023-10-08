@@ -41,8 +41,11 @@
     <ClInclude Include="Test_Float3.h">
       <Filter>Test</Filter>
     </ClInclude>
+    <ClInclude Include="Test_Matrix4.h">
+      <Filter>Test</Filter>
+    </ClInclude>
     <ClInclude Include="Test_Float4.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Test</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
