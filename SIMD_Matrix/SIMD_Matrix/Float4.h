@@ -16,6 +16,7 @@ struct Float4
 	Float4(const Float4& v) = default;
 	Float4(float x, float y, float z, float w);
 	Float4(const Float3& v, float w);
+	Float4(const float e[4]);
 	Float4 operator+(const Float4& v) const;
 	Float4& operator+=(const Float4& v);
 	Float4 operator+() const;
@@ -51,6 +52,10 @@ inline Float4::Float4(float _x, float _y, float _z, float _w) : x(_x), y(_y), z(
 }
 
 inline Float4::Float4(const Float3& v, float w) : x(v.x), y(v.y), z(v.z), w(w)
+{
+}
+
+inline Float4::Float4(const float e[4]) : x(e[0]), y(e[1]), z(e[2]), w(e[3])
 {
 }
 

@@ -58,7 +58,7 @@ TEST_CASE("Matrix4 each element construct")
 
 TEST_CASE("Matrix4 double array construct")
 {
-	double elem[4][4] = {
+	float elem[4][4] = {
 		{1.3, 2, 3, 4},
 		{5, 6, 7, 8},
 		{9, 10, 11, 12},
@@ -66,7 +66,6 @@ TEST_CASE("Matrix4 double array construct")
 	};
 
 	Matrix4 mat(elem);
-
 
 	CHECK(mat.m[0][0] == doctest::Approx(1.3).epsilon(0.01));
 	CHECK(mat.m[0][1] == doctest::Approx(2).epsilon(0.01));
@@ -91,31 +90,26 @@ TEST_CASE("Matrix4 double array construct")
 
 TEST_CASE("Matrix4 each Float4 construct")
 {
-	Matrix4 mat(
-		Float4(1.3, 2, 3, 4),
-		Float4(5, 6, 7, 8),
-		Float4(9, 10, 11, 12),
-		Float4(13, 14, 0, -23.4f)
-	);
+	Matrix4 mat(Float4(1.3, 2, 3, 4), Float4(5, 6, 7, 8), Float4(9, 10, 11, 12), Float4(13, 14, 0, -23.4f));
 
 	CHECK(mat.m[0][0] == doctest::Approx(1.3).epsilon(0.01));
-	CHECK(mat.m[0][1] == doctest::Approx(2).epsilon(0.01));
-	CHECK(mat.m[0][2] == doctest::Approx(3).epsilon(0.01));
-	CHECK(mat.m[0][3] == doctest::Approx(4).epsilon(0.01));
+	CHECK(mat.m[1][0] == doctest::Approx(2).epsilon(0.01));
+	CHECK(mat.m[2][0] == doctest::Approx(3).epsilon(0.01));
+	CHECK(mat.m[3][0] == doctest::Approx(4).epsilon(0.01));
 
-	CHECK(mat.m[1][0] == doctest::Approx(5).epsilon(0.01));
+	CHECK(mat.m[0][1] == doctest::Approx(5).epsilon(0.01));
 	CHECK(mat.m[1][1] == doctest::Approx(6).epsilon(0.01));
-	CHECK(mat.m[1][2] == doctest::Approx(7).epsilon(0.01));
-	CHECK(mat.m[1][3] == doctest::Approx(8).epsilon(0.01));
+	CHECK(mat.m[2][1] == doctest::Approx(7).epsilon(0.01));
+	CHECK(mat.m[3][1] == doctest::Approx(8).epsilon(0.01));
 
-	CHECK(mat.m[2][0] == doctest::Approx(9).epsilon(0.01));
-	CHECK(mat.m[2][1] == doctest::Approx(10).epsilon(0.01));
+	CHECK(mat.m[0][2] == doctest::Approx(9).epsilon(0.01));
+	CHECK(mat.m[1][2] == doctest::Approx(10).epsilon(0.01));
 	CHECK(mat.m[2][2] == doctest::Approx(11).epsilon(0.01));
-	CHECK(mat.m[2][3] == doctest::Approx(12).epsilon(0.01));
+	CHECK(mat.m[3][2] == doctest::Approx(12).epsilon(0.01));
 
-	CHECK(mat.m[3][0] == doctest::Approx(13).epsilon(0.01));
-	CHECK(mat.m[3][1] == doctest::Approx(14).epsilon(0.01));
-	CHECK(mat.m[3][2] == doctest::Approx(0).epsilon(0.01));
+	CHECK(mat.m[0][3] == doctest::Approx(13).epsilon(0.01));
+	CHECK(mat.m[1][3] == doctest::Approx(14).epsilon(0.01));
+	CHECK(mat.m[2][3] == doctest::Approx(0).epsilon(0.01));
 	CHECK(mat.m[3][3] == doctest::Approx(-23.4f).epsilon(0.01));
 }
 
@@ -607,4 +601,105 @@ TEST_CASE("Matrix4 *= operator")
 	CHECK(m2.m[3][1] == doctest::Approx(-49.12).epsilon(0.01));
 	CHECK(m2.m[3][2] == doctest::Approx(39.06).epsilon(0.01));
 	CHECK(m2.m[3][3] == doctest::Approx(-9.78).epsilon(0.01));
+}
+
+TEST_CASE("Matrix4 * Float4 operator")
+{
+	Matrix4 m(
+		0, 0.5, -0.5, -13.5,
+		2, 1.3, 3.69, 0.6,
+		-2.9, -4.3, -3, -6.3,
+		0.2, -1.1, 0.6, -0.3
+	);
+	Float4 f1(1, 2, 3, -4);
+	Float4 f2 = m * f1;
+
+	CHECK(f2.x == doctest::Approx(53.5).epsilon(0.01));
+	CHECK(f2.y == doctest::Approx(13.27).epsilon(0.01));
+	CHECK(f2.z == doctest::Approx(4.7).epsilon(0.01));
+	CHECK(f2.w == doctest::Approx(1).epsilon(0.01));
+}
+
+TEST_CASE("*= Float4 operator")
+{
+	Matrix4 m(
+		0, 0.5, -0.5, -13.5,
+		2, 1.3, 3.69, 0.6,
+		-2.9, -4.3, -3, -6.3,
+		0.2, -1.1, 0.6, -0.3
+	);
+	Float4 f1(1, 2, 3, -4);
+	Float4 f2 = m *= f1;
+
+	CHECK(f2.x == doctest::Approx(53.5).epsilon(0.01));
+	CHECK(f2.y == doctest::Approx(13.27).epsilon(0.01));
+	CHECK(f2.z == doctest::Approx(4.7).epsilon(0.01));
+	CHECK(f2.w == doctest::Approx(1).epsilon(0.01));
+}
+
+TEST_CASE("Matrix4 / float operator")
+{
+	Matrix4 mat1(
+		1.3, 2, 3, 4,
+		-5, 6, 7, 8,
+		9, 10, 11, 12,
+		13, 14, 0, -23.4f
+	);
+
+	float k = -2.5;
+	Matrix4 mat2 = mat1 / k;
+
+	CHECK(mat2.m[0][0] == doctest::Approx(1.3 / -2.5).epsilon(0.01));
+	CHECK(mat2.m[0][1] == doctest::Approx(2 / -2.5).epsilon(0.01));
+	CHECK(mat2.m[0][2] == doctest::Approx(3 / -2.5).epsilon(0.01));
+	CHECK(mat2.m[0][3] == doctest::Approx(4 / -2.5).epsilon(0.01));
+
+	CHECK(mat2.m[1][0] == doctest::Approx(-5 / -2.5).epsilon(0.01));
+	CHECK(mat2.m[1][1] == doctest::Approx(6 / -2.5).epsilon(0.01));
+	CHECK(mat2.m[1][2] == doctest::Approx(7 / -2.5).epsilon(0.01));
+	CHECK(mat2.m[1][3] == doctest::Approx(8 / -2.5).epsilon(0.01));
+
+	CHECK(mat2.m[2][0] == doctest::Approx(9 / -2.5).epsilon(0.01));
+	CHECK(mat2.m[2][1] == doctest::Approx(10 / -2.5).epsilon(0.01));
+	CHECK(mat2.m[2][2] == doctest::Approx(11 / -2.5).epsilon(0.01));
+	CHECK(mat2.m[2][3] == doctest::Approx(12 / -2.5).epsilon(0.01));
+
+	CHECK(mat2.m[3][0] == doctest::Approx(13 / -2.5).epsilon(0.01));
+	CHECK(mat2.m[3][1] == doctest::Approx(14 / -2.5).epsilon(0.01));
+	CHECK(mat2.m[3][2] == doctest::Approx(0).epsilon(0.01));
+	CHECK(mat2.m[3][3] == doctest::Approx(-23.4 / -2.5).epsilon(0.01));
+}
+
+TEST_CASE("Matrix4 / float operator")
+{
+	Matrix4 mat(
+		1.3, 2, 3, 4,
+		-5, 6, 7, 8,
+		9, 10, 11, 12,
+		13, 14, 0, -23.4f
+	);
+
+	float k1 = -2.5;
+	float k2 = 0.8;
+	(mat /= k1) /= k2;
+
+	CHECK(mat.m[0][0] == doctest::Approx(1.3 / -2.5 / 0.8).epsilon(0.01));
+	CHECK(mat.m[0][1] == doctest::Approx(2 / -2.5 / 0.8).epsilon(0.01));
+	CHECK(mat.m[0][2] == doctest::Approx(3 / -2.5 / 0.8).epsilon(0.01));
+	CHECK(mat.m[0][3] == doctest::Approx(4 / -2.5 / 0.8).epsilon(0.01));
+
+	CHECK(mat.m[1][0] == doctest::Approx(-5 / -2.5 / 0.8).epsilon(0.01));
+	CHECK(mat.m[1][1] == doctest::Approx(6 / -2.5 / 0.8).epsilon(0.01));
+	CHECK(mat.m[1][2] == doctest::Approx(7 / -2.5 / 0.8).epsilon(0.01));
+	CHECK(mat.m[1][3] == doctest::Approx(8 / -2.5 / 0.8).epsilon(0.01));
+
+	CHECK(mat.m[2][0] == doctest::Approx(9 / -2.5 / 0.8).epsilon(0.01));
+	CHECK(mat.m[2][1] == doctest::Approx(10 / -2.5 / 0.8).epsilon(0.01));
+	CHECK(mat.m[2][2] == doctest::Approx(11 / -2.5 / 0.8).epsilon(0.01));
+	CHECK(mat.m[2][3] == doctest::Approx(12 / -2.5 / 0.8).epsilon(0.01));
+
+	CHECK(mat.m[3][0] == doctest::Approx(13 / -2.5 / 0.8).epsilon(0.01));
+	CHECK(mat.m[3][1] == doctest::Approx(14 / -2.5 / 0.8).epsilon(0.01));
+	CHECK(mat.m[3][2] == doctest::Approx(0).epsilon(0.01));
+	CHECK(mat.m[3][3] == doctest::Approx(-23.4 / -2.5 / 0.8).epsilon(0.01));
 }

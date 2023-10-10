@@ -18,6 +18,16 @@ TEST_CASE("x y z is inputed vector constructor")
 	CHECK(v.z == doctest::Approx(1.6).epsilon(0.01));
 }
 
+TEST_CASE("float[3] vector consturct")
+{
+	float e[3] = {-1, 0, 3.2};
+	Float3 v = Float3(e);
+
+	CHECK(v.x == doctest::Approx(-1).epsilon(0.01));
+	CHECK(v.y == doctest::Approx(0).epsilon(0.01));
+	CHECK(v.z == doctest::Approx(3.2).epsilon(0.01));
+}
+
 TEST_CASE("Float3 vector constuctor")
 {
 	Float3 v(-3, 0.85, 0);

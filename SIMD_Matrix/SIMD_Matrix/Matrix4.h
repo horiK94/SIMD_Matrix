@@ -1,23 +1,21 @@
 #pragma once
 #include "Float4.h"
+#include <vector>
 
 struct Matrix4
 {
-	double m[4][4];
+	float m[4][4];
 
 	Matrix4();
 	struct NothingInit {};
 	Matrix4(NothingInit);
 	Matrix4(const Matrix4& v) = default;
-	Matrix4(double m11, double m12, double m13, double m14,
-		double m21, double m22, double m23, double m24,
-		double m31, double m32, double m33, double m34,
-		double m41, double m42, double m43, double m44);
-	Matrix4(double m[4][4]);
-	Matrix4(const Float4& v1,
-		const Float4& v2,
-		const Float4& v3,
-		const Float4& v4);
+	Matrix4(float m11, float m12, float m13, float m14,
+		float m21, float m22, float m23, float m24,
+		float m31, float m32, float m33, float m34,
+		float m41, float m42, float m43, float m44);
+	Matrix4(float m[4][4]);
+	Matrix4(const Float4& v1, const Float4& v2, const Float4& v3, const Float4& v4);
 	static Matrix4 Identity();
 	Matrix4 operator+(const Matrix4 m) const;
 	Matrix4 operator+() const;
@@ -25,16 +23,16 @@ struct Matrix4
 	Matrix4 operator-(const Matrix4 m) const;
 	Matrix4 operator-() const;
 	Matrix4& operator-=(const Matrix4 m);
-	Matrix4 operator*(double k) const;
-	friend Matrix4 operator*(const double k, const Matrix4 m);
-	Matrix4& operator*=(const double k);
+	Matrix4 operator*(float k) const;
+	friend Matrix4 operator*(const float k, const Matrix4 m);
+	Matrix4& operator*=(const float k);
 	Matrix4 operator *(const Matrix4 m) const;
 	Matrix4& operator*=(const Matrix4 m);
 	Float4 operator*(const Float4 v) const;
 	Float4& operator*=(const Float4 v);
-	Matrix4 operator/(double k) const;
-	Matrix4& operator/=(double	 k);
-	double Det() const;
+	Matrix4 operator/(float k) const;
+	Matrix4& operator/=(float k);
+	float Det() const;
 };
 
 
@@ -53,10 +51,11 @@ inline Matrix4::Matrix4(NothingInit)
 {
 }
 
-inline Matrix4::Matrix4(double m00, double m01, double m02, double m03,
-	double m10, double m11, double m12, double m13,
-	double m20, double m21, double m22, double m23,
-	double m30, double m31, double m32, double m33)
+inline Matrix4::Matrix4(
+	float m00, float m01, float m02, float m03,
+	float m10, float m11, float m12, float m13,
+	float m20, float m21, float m22, float m23,
+	float m30, float m31, float m32, float m33)
 {
 	m[0][0] = m00;
 	m[0][1] = m01;
@@ -79,7 +78,7 @@ inline Matrix4::Matrix4(double m00, double m01, double m02, double m03,
 	m[3][3] = m33;
 }
 
-inline Matrix4::Matrix4(double mat[4][4])
+inline Matrix4::Matrix4(float mat[4][4])
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -93,23 +92,23 @@ inline Matrix4::Matrix4(double mat[4][4])
 inline Matrix4::Matrix4(const Float4& v1, const Float4& v2, const Float4& v3, const Float4& v4)
 {
 	m[0][0] = v1.x;
-	m[0][1] = v1.y;
-	m[0][2] = v1.z;
-	m[0][3] = v1.w;
+	m[1][0] = v1.y;
+	m[2][0] = v1.z;
+	m[3][0] = v1.w;
 
-	m[1][0] = v2.x;
+	m[0][1] = v2.x;
 	m[1][1] = v2.y;
-	m[1][2] = v2.z;
-	m[1][3] = v2.w;
+	m[2][1] = v2.z;
+	m[3][1] = v2.w;
 
-	m[2][0] = v3.x;
-	m[2][1] = v3.y;
+	m[0][2] = v3.x;
+	m[1][2] = v3.y;
 	m[2][2] = v3.z;
-	m[2][3] = v3.w;
+	m[3][2] = v3.w;
 
-	m[3][0] = v4.x;
-	m[3][1] = v4.y;
-	m[3][2] = v4.z;
+	m[0][3] = v4.x;
+	m[1][3] = v4.y;
+	m[2][3] = v4.z;
 	m[3][3] = v4.w;
 }
 
@@ -125,7 +124,7 @@ inline Matrix4 Matrix4::Identity()
 
 inline Matrix4 Matrix4::operator+(const Matrix4 m) const
 {
-	double elem[4][4];
+	float elem[4][4];
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
@@ -157,7 +156,7 @@ inline Matrix4& Matrix4::operator+=(const Matrix4 m)
 
 inline Matrix4 Matrix4::operator-(const Matrix4 m) const
 {
-	double elem[4][4];
+	float elem[4][4];
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
@@ -171,7 +170,7 @@ inline Matrix4 Matrix4::operator-(const Matrix4 m) const
 
 inline Matrix4 Matrix4::operator-() const
 {
-	double elem[4][4];
+	float elem[4][4];
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
@@ -194,9 +193,9 @@ inline Matrix4& Matrix4::operator-=(const Matrix4 m)
 	return *this;
 }
 
-inline Matrix4 Matrix4::operator*(double k) const
+inline Matrix4 Matrix4::operator*(float k) const
 {
-	double elem[4][4];
+	float elem[4][4];
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
@@ -207,13 +206,26 @@ inline Matrix4 Matrix4::operator*(double k) const
 	return Matrix4(elem);
 }
 
-inline Matrix4& Matrix4::operator*=(const double k)
+inline Matrix4 operator*(const float k, const Matrix4 m)
+{
+	float elem[4][4];
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			elem[i][j] = k * m.m[i][j];
+		}
+	}
+	return Matrix4(elem);
+}
+
+inline Matrix4& Matrix4::operator*=(const float k)
 {
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			this->m[i][j] = this->m[i][j] * k;
+			this->m[i][j] *= k;
 		}
 	}
 	return *this;
@@ -221,12 +233,12 @@ inline Matrix4& Matrix4::operator*=(const double k)
 
 inline Matrix4 Matrix4::operator*(const Matrix4 m) const
 {
-	double elem[4][4];
+	float elem[4][4];
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			double sum = 0;
+			float sum = 0;
 			for (int k = 0; k < 4; k++)
 			{
 				sum += this->m[i][k] * m.m[k][j];
@@ -241,12 +253,12 @@ inline Matrix4 Matrix4::operator*(const Matrix4 m) const
 
 inline Matrix4& Matrix4::operator*=(const Matrix4 m)
 {
-	double elem[4][4];
+	float elem[4][4];
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			double sum = 0;
+			float sum = 0;
 			for (int k = 0; k < 4; k++)
 			{
 				sum += this->m[i][k] * m.m[k][j];
@@ -260,15 +272,62 @@ inline Matrix4& Matrix4::operator*=(const Matrix4 m)
 	return *this;
 }
 
-inline Matrix4 operator*(const double k, const Matrix4 m)
+inline Float4 Matrix4::operator*(const Float4 v) const
 {
-	double elem[4][4];
+	float elem[4];
+	for (int i = 0; i < 4; i++)
+	{
+		elem[i] = this->m[i][0] * v.x
+			+ this->m[i][1] * v.y
+			+ this->m[i][2] * v.z
+			+ this->m[i][3] * v.w;
+	}
+
+	return Float4(elem);
+}
+
+inline Float4& Matrix4::operator*=(const Float4 v)
+{
+	float elem[4];
+	for (int i = 0; i < 4; i++)
+	{
+		elem[i] = this->m[i][0] * v.x
+			+ this->m[i][1] * v.y
+			+ this->m[i][2] * v.z
+			+ this->m[i][3] * v.w;
+	}
+
+	Float4 calc(elem);
+	return calc;
+}
+
+inline Matrix4 Matrix4::operator/(float k) const
+{
+	float elem[4][4];
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			elem[i][j] = k * m.m[i][j];
+			elem[i][j] = this->m[i][j] / k;
 		}
 	}
+
 	return Matrix4(elem);
+}
+
+inline Matrix4& Matrix4::operator/=(float k)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			this->m[i][j] /= k;
+		}
+	}
+	return *this;
+}
+
+inline float Matrix4::Det() const
+{
+	std::vector<float> elem;
 }

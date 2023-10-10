@@ -131,7 +131,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Matrix4.cpp" />
     <ClCompile Include="SIMD_Matrix.cpp" />
   </ItemGroup>
   <ItemGroup>

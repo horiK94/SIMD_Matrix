@@ -13,6 +13,7 @@ struct Float3
 	Float3(NothingInit);
 	Float3(const Float3& v) = default;
 	Float3(float x, float y, float z);
+	Float3(const float e[3]);
 	Float3 operator+(const Float3& v) const;
 	Float3& operator+=(const Float3& v);
 	Float3 operator+() const;
@@ -46,6 +47,10 @@ inline Float3::Float3(NothingInit)
 }
 
 inline Float3::Float3(float _x, float _y, float _z) : x(_x), y(_y), z(_z)
+{
+}
+
+inline Float3::Float3(const float e[3]) : x(e[0]), y(e[1]), z(e[2])
 {
 }
 
