@@ -703,3 +703,15 @@ TEST_CASE("Matrix4 / float operator")
 	CHECK(mat.m[3][2] == doctest::Approx(0).epsilon(0.01));
 	CHECK(mat.m[3][3] == doctest::Approx(-23.4 / -2.5 / 0.8).epsilon(0.01));
 }
+
+TEST_CASE("Matrix4 det calc")
+{
+	Matrix4 mat(
+		-2, 1, 1, 2,
+		5, 1, 9.8, 4,
+		2, 0, 1, 0,
+		1, 3, 2, 1.6
+	);
+
+	CHECK(mat.Det() == doctest::Approx(-28.64).epsilon(0.01));
+}
