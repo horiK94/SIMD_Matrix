@@ -33,7 +33,7 @@ struct Float3
 	Float3& normalize();
 
 	static float Dot(const Float3& v1, const Float3& v2);
-	static Float3 Cross(const Float3 & v1, const Float3 & v2);
+	static Float3 Cross(const Float3& v1, const Float3& v2);
 	static Float3 Normalize(const Float3& v);
 };
 std::ostream& operator<<(std::ostream& stream, const Float3& v);

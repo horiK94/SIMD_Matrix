@@ -163,7 +163,7 @@ inline Float4 Float4::Normalize(const Float4& v)
 	float len = v.length();
 	float lenInv = 1 / len;
 
-	return Float4(lenInv * v.x, lenInv * v.y, lenInv * v.z, lenInv  * v.w);
+	return Float4(lenInv * v.x, lenInv * v.y, lenInv * v.z, lenInv * v.w);
 }
 
 inline std::ostream& operator<<(std::ostream& stream, const Float4& v)
