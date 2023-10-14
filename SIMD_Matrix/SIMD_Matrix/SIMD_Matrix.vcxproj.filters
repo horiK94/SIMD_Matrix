@@ -16,6 +16,18 @@
     <Filter Include="Test">
       <UniqueIdentifier>{0b94d525-232c-4d71-86dd-93de7f8d4172}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Basic">
+      <UniqueIdentifier>{e98ec5eb-6968-4b48-a969-e7d0f727e8c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test\Basic">
+      <UniqueIdentifier>{31cc5620-1f00-4328-8118-00ed28f00d83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test\SIMD">
+      <UniqueIdentifier>{3f1640bf-8347-476d-802e-8fd903b2aaa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\SIMD">
+      <UniqueIdentifier>{63957b5d-c729-4530-abc9-dfa6f0b84d88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SIMD_Matrix.cpp">
@@ -23,26 +35,32 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Float3.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Float4.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Matrix4.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="..\doctest-master\doctest\doctest.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Test_Float3.h">
-      <Filter>Test</Filter>
+    <ClInclude Include="Float3.h">
+      <Filter>ヘッダー ファイル\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Float4.h">
+      <Filter>ヘッダー ファイル\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix4.h">
+      <Filter>ヘッダー ファイル\Basic</Filter>
     </ClInclude>
     <ClInclude Include="Test_Matrix4.h">
-      <Filter>Test</Filter>
+      <Filter>Test\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Test_Float3.h">
+      <Filter>Test\Basic</Filter>
     </ClInclude>
     <ClInclude Include="Test_Float4.h">
-      <Filter>Test</Filter>
+      <Filter>Test\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Test_SIMDFloat3.h">
+      <Filter>Test\SIMD</Filter>
+    </ClInclude>
+    <ClInclude Include="SIMDFloat3.h">
+      <Filter>ヘッダー ファイル\SIMD</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
