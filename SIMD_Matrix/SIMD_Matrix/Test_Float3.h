@@ -20,7 +20,7 @@ TEST_CASE("x y z is inputed vector constructor")
 
 TEST_CASE("float[3] vector consturct")
 {
-	float e[3] = {-1, 0, 3.2};
+	float e[3] = { -1, 0, 3.2 };
 	Float3 v = Float3(e);
 
 	CHECK(v.x == doctest::Approx(-1).epsilon(0.01));
@@ -186,4 +186,61 @@ TEST_CASE("Cross() calculation")
 	CHECK(cross.x == doctest::Approx(-18).epsilon(0.01));
 	CHECK(cross.y == doctest::Approx(-6.3).epsilon(0.01));
 	CHECK(cross.z == doctest::Approx(10.2).epsilon(0.01));
+}
+
+TEST_CASE("equal() calculation")
+{
+	Float3 v(2.1, -6, 0);
+	Float3 w1(2.1, -6.0, 0);
+	float epsilon = 0.01;
+
+	CHECK(v.equal(w1, epsilon));
+
+	Float3 w2(2.08, -6, 0);
+	CHECK_FALSE(v.equal(w2, epsilon));
+
+	Float3 w3(2.1, -6.02, 0);
+	CHECK_FALSE(v.equal(w3, epsilon));
+}
+
+TEST_CASE("zero() calculation")
+{
+	Float3 z1 = Float3();
+	Float3 z2 = Float3(0.01, 0, 0);
+	Float3 z3 = Float3(0, 0.01, 0);
+	Float3 z4 = Float3(0, 0, 0.01);
+
+	CHECK(z1.isZero());
+	CHECK_FALSE(z2.isZero());
+	CHECK_FALSE(z3.isZero());
+	CHECK_FALSE(z4.isZero());
+}
+
+TEST_CASE("length() calculation")
+{
+	Float3 v(2.1, -6, 0);
+	CHECK(v.length() == doctest::Approx(6.35688603013).epsilon(0.01));
+}
+
+TEST_CASE("lengthSq() calculation")
+{
+	Float3 v(2.1, -6, 0);
+	CHECK(v.squareLength() == doctest::Approx(40.41).epsilon(0.01));
+}
+
+TEST_CASE("normalize() calculation")
+{
+	Float3 v(2.1, -6, 0);
+	v.normalize();
+	CHECK(v.x == doctest::Approx(2.1 / 6.35688603013).epsilon(0.01));
+	CHECK(v.y == doctest::Approx(-6 / 6.35688603013).epsilon(0.01));
+	CHECK(v.z == doctest::Approx(0).epsilon(0.01));
+}
+
+TEST_CASE("Normalize() calculation")
+{
+	Float3 v = Float3::Normalize(Float3(2.1, -6, 0));
+	CHECK(v.x == doctest::Approx(2.1 / 6.35688603013).epsilon(0.01));
+	CHECK(v.y == doctest::Approx(-6 / 6.35688603013).epsilon(0.01));
+	CHECK(v.z == doctest::Approx(0).epsilon(0.01));
 }
