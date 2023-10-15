@@ -207,3 +207,65 @@ TEST_CASE("Dot() calculation")
 	double dot = Float4::Dot(v, w);
 	CHECK(dot == doctest::Approx(-9.1596).epsilon(0.01));
 }
+
+TEST_CASE("equal() calculation")
+{
+	Float4 v(2.1, -6, 0, -1.234);
+	Float4 w1(2.1, -6, 0, -1.234);
+	float epsilon = 0.01;
+
+	CHECK(v.equal(w1, epsilon));
+
+	Float4 w2(2.08, -6, 0, -1.234);
+	CHECK_FALSE(v.equal(w2, epsilon));
+
+	Float4 w3(2.1, -6.02, 0, -1.234);
+	CHECK_FALSE(v.equal(w3, epsilon));
+}
+
+TEST_CASE("zero() calculation")
+{
+	Float4 z1 = Float4();
+	Float4 z2 = Float4(0.01, 0, 0, 0);
+	Float4 z3 = Float4(0, 0.01, 0, 0);
+	Float4 z4 = Float4(0, 0, 0.01, 0);
+	Float4 z5 = Float4(0, 0, 0, -0.01);
+
+	CHECK(z1.isZero());
+	CHECK_FALSE(z2.isZero());
+	CHECK_FALSE(z3.isZero());
+	CHECK_FALSE(z4.isZero());
+	CHECK_FALSE(z5.isZero());
+}
+
+TEST_CASE("length() calculation")
+{
+	Float4 v(2.1, -6, 0, -1.234);
+	CHECK(v.length() == doctest::Approx(6.47555063296).epsilon(0.01));
+}
+
+TEST_CASE("lengthSq() calculation")
+{
+	Float4 v(2.1, -6, 0, -1.234);
+	CHECK(v.squareLength() == doctest::Approx(41.932756).epsilon(0.01));
+}
+
+TEST_CASE("normalize() calculation")
+{
+	Float4 v(2.1, -6, 0, -1.234);
+	v.normalize();
+	CHECK(v.x == doctest::Approx(2.1 / 6.47555063296).epsilon(0.01));
+	CHECK(v.y == doctest::Approx(-6 / 6.47555063296).epsilon(0.01));
+	CHECK(v.z == doctest::Approx(0).epsilon(0.01));
+	CHECK(v.w == doctest::Approx(-1.234 / 6.47555063296).epsilon(0.01));
+}
+
+TEST_CASE("Normalize() calculation")
+{
+	Float4 v = Float4::Normalize(Float4(2.1, -6, 0, -1.234));
+	CHECK(v.x == doctest::Approx(2.1 / 6.47555063296).epsilon(0.01));
+	CHECK(v.y == doctest::Approx(-6 / 6.47555063296).epsilon(0.01));
+	CHECK(v.z == doctest::Approx(0).epsilon(0.01));
+	CHECK(v.w == doctest::Approx(-1.234 / 6.47555063296).epsilon(0.01));
+
+}
