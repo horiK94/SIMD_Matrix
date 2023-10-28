@@ -29,7 +29,7 @@ struct Matrix4
 	Matrix4 operator *(const Matrix4& m) const;
 	Matrix4& operator*=(const Matrix4& m);
 	friend Float4 operator*(const Float4& v, const Matrix4& m);
-	friend Float4& operator*=(const Float4 v, const Matrix4& m);
+	friend Float4& operator*=(const Float4& v, const Matrix4& m);
 	Matrix4 operator/(float k) const;
 	Matrix4& operator/=(float k);
 	float Det() const;
@@ -223,24 +223,24 @@ inline Float4 operator*(const Float4& v, const Matrix4& m)
 	float elem[4];
 	for (int i = 0; i < 4; i++)
 	{
-		elem[i] = m.m[i][0] * v.x
-			+ m.m[i][1] * v.y
-			+ m.m[i][2] * v.z
-			+ m.m[i][3] * v.w;
+		elem[i] = m.m[0][i] * v.x
+			+ m.m[1][i] * v.y
+			+ m.m[2][i] * v.z
+			+ m.m[3][i] * v.w;
 	}
 
 	return Float4(elem);
 }
 
-inline Float4& operator*=(const Float4 v, const Matrix4& m)
+inline Float4& operator*=(const Float4& v, const Matrix4& m)
 {
 	float elem[4];
 	for (int i = 0; i < 4; i++)
 	{
-		elem[i] = m.m[i][0] * v.x
-			+ m.m[i][1] * v.y
-			+ m.m[i][2] * v.z
-			+ m.m[i][3] * v.w;
+		elem[i] = m.m[0][i] * v.x
+			+ m.m[1][i] * v.y
+			+ m.m[2][i] * v.z
+			+ m.m[3][i] * v.w;
 	}
 
 	Float4 calc(elem);
