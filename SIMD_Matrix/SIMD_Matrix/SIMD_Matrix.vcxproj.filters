@@ -68,5 +68,11 @@
     <ClInclude Include="Test_SIMDFloat4.h">
       <Filter>Test\SIMD</Filter>
     </ClInclude>
+    <ClInclude Include="SIMDMatrix4.h">
+      <Filter>ヘッダー ファイル\SIMD</Filter>
+    </ClInclude>
+    <ClInclude Include="Test_SIMDMatrix.h">
+      <Filter>Test\SIMD</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

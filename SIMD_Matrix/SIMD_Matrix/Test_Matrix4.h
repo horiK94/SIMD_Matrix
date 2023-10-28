@@ -1,4 +1,5 @@
 #pragma once
+#include "Float4.h"
 #include "Matrix4.h"
 #include "ThirdParty/doctest/doctest.h"
 
@@ -93,23 +94,23 @@ TEST_CASE("Matrix4 each Float4 construct")
 	Matrix4 mat(Float4(1.3, 2, 3, 4), Float4(5, 6, 7, 8), Float4(9, 10, 11, 12), Float4(13, 14, 0, -23.4f));
 
 	CHECK(mat.m[0][0] == doctest::Approx(1.3).epsilon(0.01));
-	CHECK(mat.m[1][0] == doctest::Approx(2).epsilon(0.01));
-	CHECK(mat.m[2][0] == doctest::Approx(3).epsilon(0.01));
-	CHECK(mat.m[3][0] == doctest::Approx(4).epsilon(0.01));
+	CHECK(mat.m[0][1] == doctest::Approx(2).epsilon(0.01));
+	CHECK(mat.m[0][2] == doctest::Approx(3).epsilon(0.01));
+	CHECK(mat.m[0][3] == doctest::Approx(4).epsilon(0.01));
 
-	CHECK(mat.m[0][1] == doctest::Approx(5).epsilon(0.01));
+	CHECK(mat.m[1][0] == doctest::Approx(5).epsilon(0.01));
 	CHECK(mat.m[1][1] == doctest::Approx(6).epsilon(0.01));
-	CHECK(mat.m[2][1] == doctest::Approx(7).epsilon(0.01));
-	CHECK(mat.m[3][1] == doctest::Approx(8).epsilon(0.01));
+	CHECK(mat.m[1][2] == doctest::Approx(7).epsilon(0.01));
+	CHECK(mat.m[1][3] == doctest::Approx(8).epsilon(0.01));
 
-	CHECK(mat.m[0][2] == doctest::Approx(9).epsilon(0.01));
-	CHECK(mat.m[1][2] == doctest::Approx(10).epsilon(0.01));
+	CHECK(mat.m[2][0] == doctest::Approx(9).epsilon(0.01));
+	CHECK(mat.m[2][1] == doctest::Approx(10).epsilon(0.01));
 	CHECK(mat.m[2][2] == doctest::Approx(11).epsilon(0.01));
-	CHECK(mat.m[3][2] == doctest::Approx(12).epsilon(0.01));
+	CHECK(mat.m[2][3] == doctest::Approx(12).epsilon(0.01));
 
-	CHECK(mat.m[0][3] == doctest::Approx(13).epsilon(0.01));
-	CHECK(mat.m[1][3] == doctest::Approx(14).epsilon(0.01));
-	CHECK(mat.m[2][3] == doctest::Approx(0).epsilon(0.01));
+	CHECK(mat.m[3][0] == doctest::Approx(13).epsilon(0.01));
+	CHECK(mat.m[3][1] == doctest::Approx(14).epsilon(0.01));
+	CHECK(mat.m[3][2] == doctest::Approx(0).epsilon(0.01));
 	CHECK(mat.m[3][3] == doctest::Approx(-23.4f).epsilon(0.01));
 }
 
@@ -612,7 +613,7 @@ TEST_CASE("Matrix4 * Float4 operator")
 		0.2, -1.1, 0.6, -0.3
 	);
 	Float4 f1(1, 2, 3, -4);
-	Float4 f2 = m * f1;
+	Float4 f2 = f1 * m;
 
 	CHECK(f2.x == doctest::Approx(53.5).epsilon(0.01));
 	CHECK(f2.y == doctest::Approx(13.27).epsilon(0.01));
@@ -629,13 +630,14 @@ TEST_CASE("*= Float4 operator")
 		0.2, -1.1, 0.6, -0.3
 	);
 	Float4 f1(1, 2, 3, -4);
-	Float4 f2 = m *= f1;
+	Float4 f2 = f1 *= m;
 
 	CHECK(f2.x == doctest::Approx(53.5).epsilon(0.01));
 	CHECK(f2.y == doctest::Approx(13.27).epsilon(0.01));
 	CHECK(f2.z == doctest::Approx(4.7).epsilon(0.01));
 	CHECK(f2.w == doctest::Approx(1).epsilon(0.01));
 }
+
 
 TEST_CASE("Matrix4 / float operator")
 {

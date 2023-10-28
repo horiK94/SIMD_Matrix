@@ -140,11 +140,13 @@
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="SIMDFloat3.h" />
     <ClInclude Include="SIMDFloat4.h" />
+    <ClInclude Include="SIMDMatrix4.h" />
     <ClInclude Include="Test_Float3.h" />
     <ClInclude Include="Test_Float4.h" />
     <ClInclude Include="Test_Matrix4.h" />
     <ClInclude Include="Test_SIMDFloat3.h" />
     <ClInclude Include="Test_SIMDFloat4.h" />
+    <ClInclude Include="Test_SIMDMatrix.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
