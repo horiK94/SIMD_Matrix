@@ -652,10 +652,10 @@ TEST_CASE("SIMDFloat4 * SIMDMatrix4 operator")
 	SIMDFloat4 f1(1, 2, 3, -4);
 	SIMDFloat4 f2 = f1 * m;
 
-	CHECK(f2.x() == doctest::Approx(-5.5).epsilon(0.01));
-	CHECK(f2.y() == doctest::Approx(-5.4).epsilon(0.01));
-	CHECK(f2.z() == doctest::Approx(-4.52).epsilon(0.01));
-	CHECK(f2.w() == doctest::Approx(-30).epsilon(0.01));
+	CHECK(f2.m.m128_f32[0] == doctest::Approx(-5.5).epsilon(0.01));
+	CHECK(f2.m.m128_f32[1] == doctest::Approx(-5.4).epsilon(0.01));
+	CHECK(f2.m.m128_f32[2] == doctest::Approx(-4.52).epsilon(0.01));
+	CHECK(f2.m.m128_f32[3] == doctest::Approx(-30).epsilon(0.01));
 }
 
 TEST_CASE("*= SIMDMatrix4 operator")
@@ -669,10 +669,10 @@ TEST_CASE("*= SIMDMatrix4 operator")
 	SIMDFloat4 f1(1, 2, 3, -4);
 	SIMDFloat4 f2 = f1 *= m;
 
-	CHECK(f2.x() == doctest::Approx(-5.5).epsilon(0.01));
-	CHECK(f2.y() == doctest::Approx(-5.4).epsilon(0.01));
-	CHECK(f2.z() == doctest::Approx(-4.52).epsilon(0.01));
-	CHECK(f2.w() == doctest::Approx(-30).epsilon(0.01));
+	CHECK(f2.m.m128_f32[0] == doctest::Approx(-5.5).epsilon(0.01));
+	CHECK(f2.m.m128_f32[1] == doctest::Approx(-5.4).epsilon(0.01));
+	CHECK(f2.m.m128_f32[2] == doctest::Approx(-4.52).epsilon(0.01));
+	CHECK(f2.m.m128_f32[3] == doctest::Approx(-30).epsilon(0.01));
 }
 
 TEST_CASE("SIMDMatrix4 / float operator")

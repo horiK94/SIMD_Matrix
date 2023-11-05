@@ -92,25 +92,25 @@ inline SIMDMatrix4::SIMDMatrix4(float mat[4][4])
 
 inline SIMDMatrix4::SIMDMatrix4(const SIMDFloat4& v1, const SIMDFloat4& v2, const SIMDFloat4& v3, const SIMDFloat4& v4)
 {
-	m[0][0] = v1.e[0];
-	m[0][1] = v1.e[1];
-	m[0][2] = v1.e[2];
-	m[0][3] = v1.e[3];
+	m[0][0] = v1.m.m128_f32[0];
+	m[0][1] = v1.m.m128_f32[1];
+	m[0][2] = v1.m.m128_f32[2];
+	m[0][3] = v1.m.m128_f32[3];
 
-	m[1][0] = v2.e[0];
-	m[1][1] = v2.e[1];
-	m[1][2] = v2.e[2];
-	m[1][3] = v2.e[3];
+	m[1][0] = v2.m.m128_f32[0];
+	m[1][1] = v2.m.m128_f32[1];
+	m[1][2] = v2.m.m128_f32[2];
+	m[1][3] = v2.m.m128_f32[3];
 
-	m[2][0] = v3.e[0];
-	m[2][1] = v3.e[1];
-	m[2][2] = v3.e[2];
-	m[2][3] = v3.e[3];
+	m[2][0] = v3.m.m128_f32[0];
+	m[2][1] = v3.m.m128_f32[1];
+	m[2][2] = v3.m.m128_f32[2];
+	m[2][3] = v3.m.m128_f32[3];
 
-	m[3][0] = v4.e[0];
-	m[3][1] = v4.e[1];
-	m[3][2] = v4.e[2];
-	m[3][3] = v4.e[3];
+	m[3][0] = v4.m.m128_f32[0];
+	m[3][1] = v4.m.m128_f32[1];
+	m[3][2] = v4.m.m128_f32[2];
+	m[3][3] = v4.m.m128_f32[3];
 }
 
 inline SIMDMatrix4::SIMDMatrix4(const __m128 v[4])
@@ -246,10 +246,9 @@ inline SIMDFloat4 operator*(const SIMDFloat4& v, const SIMDMatrix4& m)
 	float num[4];
 	for (int i = 0; i < 4; i++)
 	{
-		__m128 left = _mm_load_ps(v.e);
 		__m128 right = mVert[i];
 
-		__m128 mul = _mm_mul_ps(left, right);
+		__m128 mul = _mm_mul_ps(v.m, right);
 
 		__m128 movehlAdd = _mm_add_ps(mul, _mm_movehl_ps(mul, mul));
 
@@ -275,10 +274,9 @@ inline SIMDFloat4& operator*=(const SIMDFloat4& v, const SIMDMatrix4& m)
 	float num[4];
 	for (int i = 0; i < 4; i++)
 	{
-		__m128 left = _mm_load_ps(v.e);
 		__m128 right = mVert[i];
 
-		__m128 mul = _mm_mul_ps(left, right);
+		__m128 mul = _mm_mul_ps(v.m, right);
 
 		__m128 movehlAdd = _mm_add_ps(mul, _mm_movehl_ps(mul, mul));
 

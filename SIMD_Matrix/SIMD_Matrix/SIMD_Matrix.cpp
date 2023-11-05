@@ -2,11 +2,12 @@
 #include "Test_Float3.h"
 #include "Test_Float4.h"
 #include "Test_Matrix4.h"
-#include "Test_SIMDFloat3.h"
+//#include "Test_SIMDFloat3.h"
 #include "Test_SIMDFloat4.h"
 #include "Test_SIMDMatrix.h"
 
 #include <chrono>
+#include <vector>
 
 #define DOCTEST_CONFIG_IMPLEMENT
 #include "ThirdParty/doctest/doctest.h"
@@ -17,39 +18,43 @@ void measureRunTime()
 {
 	std::chrono::system_clock::time_point start, end;
 
-	{
-		//Float3
-		double timeWithoutSIMD = 0;
-		{
-			Float3 a(2, 3, 1);
-			Float3 b(-3, 1, 4);
+	//{
+	//	//Float3
+	//	double timeWithoutSIMD = 0;
+	//	{
+	//		Float3 a(2, 3, 1);
+	//		Float3 b(-3, 1, 4);
 
-			start = std::chrono::system_clock::now();
-			for (int i = 0; i < RUN_COUNT; i++)
-			{
-				a += b;
-			}
-			end = std::chrono::system_clock::now();
-			timeWithoutSIMD = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() / 1000.0);
-			std::cout << "Float3 time: " << timeWithoutSIMD << std::endl;
-		}
+	//		start = std::chrono::system_clock::now();
+	//		for (int i = 0; i < RUN_COUNT; i++)
+	//		{
+	//			a += b;
+	//			a -= b;
+	//			Float3::Dot(a, b);
+	//		}
+	//		end = std::chrono::system_clock::now();
+	//		timeWithoutSIMD = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() / 1000.0);
+	//		std::cout << "Float3 time: " << timeWithoutSIMD << std::endl;
+	//	}
 
-		{
-			SIMDFloat3 a(2, 3, 1);
-			SIMDFloat3 b(-3, 1, 4);
+	//	{
+	//		SIMDFloat3 a(2, 3, 1);
+	//		SIMDFloat3 b(-3, 1, 4);
 
-			start = std::chrono::system_clock::now();
-			for (int i = 0; i < RUN_COUNT; i++)
-			{
-				a += b;
-			}
-			end = std::chrono::system_clock::now();
-			double timeUseSIMD = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() / 1000.0);
-			std::cout << "SIMDFloat3 time: " << timeUseSIMD << std::endl;
-			std::cout << "diff: " << (timeWithoutSIMD - timeUseSIMD) << std::endl;
-			std::cout << std::endl;
-		}
-	}
+	//		start = std::chrono::system_clock::now();
+	//		for (int i = 0; i < RUN_COUNT; i++)
+	//		{
+	//			a += b;
+	//			a -= b;
+	//			SIMDFloat3::Dot(a, b);
+	//		}
+	//		end = std::chrono::system_clock::now();
+	//		double timeUseSIMD = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() / 1000.0);
+	//		std::cout << "SIMDFloat3 time: " << timeUseSIMD << std::endl;
+	//		std::cout << "diff: " << (timeWithoutSIMD - timeUseSIMD) << std::endl;
+	//		std::cout << std::endl;
+	//	}
+	//}
 
 	{
 		//Float4
@@ -58,10 +63,12 @@ void measureRunTime()
 			Float4 a(1, 2, 3, 4);
 			Float4 b(-2.5f, 5, -7.5f, 10);
 
+			std::vector<float> n;
+
 			start = std::chrono::system_clock::now();
 			for (int i = 0; i < RUN_COUNT; i++)
 			{
-				a += b;
+				n.push_back(Float4::Dot(a, b));
 			}
 			end = std::chrono::system_clock::now();
 			timeWithoutSIMD = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() / 1000.0);
@@ -72,10 +79,12 @@ void measureRunTime()
 			SIMDFloat4 a(1, 2, 3, 4);
 			SIMDFloat4 b(-2.5f, 5, -7.5f, 10);
 
+			std::vector<float> n;
+
 			start = std::chrono::system_clock::now();
 			for (int i = 0; i < RUN_COUNT; i++)
 			{
-				a += b;
+				n.push_back(SIMDFloat4::Dot(a, b));
 			}
 			end = std::chrono::system_clock::now();
 			double timeUseSIMD = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() / 1000.0);
