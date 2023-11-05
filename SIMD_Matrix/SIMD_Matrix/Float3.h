@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <iostream>
 
 struct Float3
@@ -13,24 +13,30 @@ struct Float3
 	Float3(NothingInit);
 	Float3(const Float3& v) = default;
 	Float3(float x, float y, float z);
-	Float3(const float e[3]);
+	Float3(const float* e);
+
+	Float3(const float(&e)[3]); // float[3] の const 参照
+
 	Float3 operator+(const Float3& v) const;
 	Float3& operator+=(const Float3& v);
 	Float3 operator+() const;
 	Float3 operator-(const Float3& v) const;
 	Float3& operator-=(const Float3& v);
 	Float3 operator-() const;
-	Float3 operator*(const float k) const;
-	friend Float3 operator*(const float k, const Float3& v);
-	Float3& operator*=(const float k);
-	Float3 operator/(const float k) const;
-	Float3& operator/=(const float k);
-	bool equal(const Float3& v, const float epsilon = 0.01) const;
+	Float3 operator*(float k) const;
+	friend Float3 operator*(float k, const Float3& v);
+	Float3& operator*=(float k);
+	Float3 operator/(float k) const;
+	Float3& operator/=(float k);
+	bool equal(const Float3& v, float epsilon = 0.01) const;
 	bool isZero() const;
 
 	float length() const;
 	float squareLength() const;
 	Float3& normalize();
+	
+	// 追加してみよう
+	Float3 normalized();
 
 	static float Dot(const Float3& v1, const Float3& v2);
 	static Float3 Cross(const Float3& v1, const Float3& v2);
@@ -46,11 +52,15 @@ inline Float3::Float3(NothingInit)
 {
 }
 
-inline Float3::Float3(float _x, float _y, float _z) : x(_x), y(_y), z(_z)
+inline Float3::Float3(const float _x, float _y, float _z) : x(_x), y(_y), z(_z)
 {
 }
 
 inline Float3::Float3(const float e[3]) : x(e[0]), y(e[1]), z(e[2])
+{
+}
+
+inline Float3::Float3(const float(&e)[3]) : x(e[0]), y(e[1]), z(e[2])
 {
 }
 
