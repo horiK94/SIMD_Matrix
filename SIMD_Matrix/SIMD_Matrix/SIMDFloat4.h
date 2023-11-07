@@ -30,15 +30,17 @@ struct SIMDFloat4
 	bool equal(const SIMDFloat4& v, float epsilon = 0.01) const;
 	bool isZero() const;
 
-	float length() const;
-	float squareLength() const;
+	SIMDFloat4 length() const;
+	SIMDFloat4 squareLength() const;
 	SIMDFloat4& normalize();
-	static float Dot(const SIMDFloat4& v1, const SIMDFloat4& v2);
+	SIMDFloat4 normalized() const;
+	float storeValue(int _index) const;
+	static SIMDFloat4 Dot(const SIMDFloat4& v1, const SIMDFloat4& v2);
 	static SIMDFloat4 Normalize(const SIMDFloat4& v);
 };
 std::ostream& operator<<(std::ostream& stream, const SIMDFloat4& v);
 
-inline SIMDFloat4::SIMDFloat4() : m(_mm_set1_ps(0))
+inline SIMDFloat4::SIMDFloat4() : m(_mm_setzero_ps())
 {
 }
 
@@ -140,35 +142,51 @@ inline bool SIMDFloat4::isZero() const
 	return _mm_movemask_ps(isEqual) == 0b1111;
 }
 
-inline float SIMDFloat4::length() const
+inline SIMDFloat4 SIMDFloat4::length() const
 {
 	__m128 mul = _mm_dp_ps(m, m, 0b11111111);
-	return _mm_sqrt_ps(mul).m128_f32[0];
+	return _mm_sqrt_ps(mul);
 }
 
-inline float SIMDFloat4::squareLength() const
+inline SIMDFloat4 SIMDFloat4::squareLength() const
 {
-	return _mm_dp_ps(m, m, 0b11111111).m128_f32[0];
+	return _mm_dp_ps(m, m, 0b11111111);
 }
 
 inline SIMDFloat4& SIMDFloat4::normalize()
 {
-	*this = SIMDFloat4(_mm_div_ps(m, _mm_set1_ps(length())));
+	*this = SIMDFloat4(_mm_div_ps(m, length().m));
 	return *this;
 }
 
-inline float SIMDFloat4::Dot(const SIMDFloat4& v1, const SIMDFloat4& v2)
+inline SIMDFloat4 SIMDFloat4::normalized() const
 {
-	//第3引数はどこまで内積計算を行うか
-	return _mm_dp_ps(v1.m, v2.m, 0b11111111).m128_f32[0];
+	return SIMDFloat4(_mm_div_ps(m, length().m));
+}
+
+inline float SIMDFloat4::storeValue(int _index) const
+{
+	float num[4];
+	_mm_store_ps(num, m);
+
+	return num[_index];
+}
+
+inline SIMDFloat4 SIMDFloat4::Dot(const SIMDFloat4& v1, const SIMDFloat4& v2)
+{
+	//第3引数はどこまで内積計算を行うかを決定するマスク
+	return _mm_dp_ps(v1.m, v2.m, 0b11111111);
 }
 
 inline SIMDFloat4 SIMDFloat4::Normalize(const SIMDFloat4& v)
 {
-	return SIMDFloat4(_mm_div_ps(v.m, _mm_set1_ps(v.length())));
+	return SIMDFloat4(_mm_div_ps(v.m, v.length().m));
 }
 
 inline std::ostream& operator<<(std::ostream& stream, const SIMDFloat4& v)
 {
-	return stream << "(" << v.m.m128_f32[0] << ", " << v.m.m128_f32[1] << ", " << v.m.m128_f32[2] << ", " << v.m.m128_f32[3] << ")";
+	float num[4];
+	_mm_store_ps(num, v.m);
+
+	return stream << "(" << num[0] << ", " << num[1] << ", " << num[2] << ", " << num[3] << ")";
 }
