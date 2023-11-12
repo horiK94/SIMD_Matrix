@@ -225,6 +225,12 @@ TEST_CASE("equal() calculation")
 
 	SIMDFloat4 w3(2.1, -6.02, 0, -1.234);
 	CHECK_FALSE(v.equal(w3, epsilon));
+
+	SIMDFloat4 w4(2.1, -6, 0.02, -1.234);
+	CHECK_FALSE(v.equal(w4, epsilon));
+
+	SIMDFloat4 w5(2.1, -6, 0, -1.2);
+	CHECK_FALSE(v.equal(w5, epsilon));
 }
 
 TEST_CASE("isZero() calculation")
@@ -287,7 +293,6 @@ TEST_CASE("normalized() calculation")
 	CHECK(w.storeValue(1) == doctest::Approx(-6 / 6.47555063296).epsilon(0.01));
 	CHECK(w.storeValue(2) == doctest::Approx(0).epsilon(0.01));
 	CHECK(w.storeValue(3) == doctest::Approx(-1.234 / 6.47555063296).epsilon(0.01));
-
 }
 
 TEST_CASE("storeValue() checked")

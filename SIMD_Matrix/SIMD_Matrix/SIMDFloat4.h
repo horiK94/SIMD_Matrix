@@ -52,7 +52,7 @@ inline SIMDFloat4::SIMDFloat4(float _x, float _y, float _z, float _w) : m(_mm_se
 {
 }
 
-inline SIMDFloat4::SIMDFloat4(const SIMDFloat3& v, float w) : m(_mm_set_ps(w, v.z(), v.y(), v.x()))
+inline SIMDFloat4::SIMDFloat4(const SIMDFloat3& v, float w) : m(_mm_set_ps(w, v.storeValue(2), v.storeValue(1), v.storeValue(0)))
 {
 }
 
@@ -127,7 +127,7 @@ inline bool SIMDFloat4::equal(const SIMDFloat4& v, const float epsilon) const
 {
 	__m128 sub = _mm_sub_ps(m, v.m);
 
-	__m128 abs = _mm_add_ps(sub, sub);
+	__m128 abs = _mm_mul_ps(sub, sub);
 	__m128 epsi = _mm_set1_ps(epsilon * epsilon);
 
 	__m128 isUnder = _mm_cmple_ps(abs, epsi);
@@ -145,12 +145,12 @@ inline bool SIMDFloat4::isZero() const
 inline SIMDFloat4 SIMDFloat4::length() const
 {
 	__m128 mul = _mm_dp_ps(m, m, 0b11111111);
-	return _mm_sqrt_ps(mul);
+	return SIMDFloat4(_mm_sqrt_ps(mul));
 }
 
 inline SIMDFloat4 SIMDFloat4::squareLength() const
 {
-	return _mm_dp_ps(m, m, 0b11111111);
+	return SIMDFloat4(_mm_dp_ps(m, m, 0b11111111));
 }
 
 inline SIMDFloat4& SIMDFloat4::normalize()
@@ -175,7 +175,7 @@ inline float SIMDFloat4::storeValue(int _index) const
 inline SIMDFloat4 SIMDFloat4::Dot(const SIMDFloat4& v1, const SIMDFloat4& v2)
 {
 	//第3引数はどこまで内積計算を行うかを決定するマスク
-	return _mm_dp_ps(v1.m, v2.m, 0b11111111);
+	return SIMDFloat4(_mm_dp_ps(v1.m, v2.m, 0b11111111));
 }
 
 inline SIMDFloat4 SIMDFloat4::Normalize(const SIMDFloat4& v)
