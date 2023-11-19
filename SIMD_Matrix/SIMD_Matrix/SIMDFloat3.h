@@ -13,19 +13,19 @@ struct SIMDFloat3
 	SIMDFloat3(const SIMDFloat3& v) = default;
 	SIMDFloat3(float x, float y, float z);
 	SIMDFloat3(const float* e);
-	SIMDFloat3(const __m128 e);
-	SIMDFloat3 operator+(const SIMDFloat3& v) const;
-	SIMDFloat3& operator+=(const SIMDFloat3& v);
+	SIMDFloat3(__m128 e);
+	SIMDFloat3 operator+(SIMDFloat3 v) const;
+	SIMDFloat3& operator+=(SIMDFloat3 v);
 	SIMDFloat3 operator+() const;
-	SIMDFloat3 operator-(const SIMDFloat3& v) const;
-	SIMDFloat3& operator-=(const SIMDFloat3& v);
+	SIMDFloat3 operator-(SIMDFloat3 v) const;
+	SIMDFloat3& operator-=(SIMDFloat3 v);
 	SIMDFloat3 operator-() const;
 	SIMDFloat3 operator*(float k) const;
-	friend SIMDFloat3 operator*(float k, const SIMDFloat3& v);
+	friend SIMDFloat3 operator*(float k, SIMDFloat3 v);
 	SIMDFloat3& operator*=(float k);
 	SIMDFloat3 operator/(float k) const;
 	SIMDFloat3& operator/=(float k);
-	bool equal(const SIMDFloat3& v, float epsilon = 0.01) const;
+	bool equal(SIMDFloat3 v, float epsilon = 0.01) const;
 	bool isZero() const;
 
 	SIMDFloat3 length() const;
@@ -34,9 +34,9 @@ struct SIMDFloat3
 	SIMDFloat3 normalized() const;
 	float storeValue(int _index) const;
 
-	static SIMDFloat3 Dot(const SIMDFloat3& v1, const SIMDFloat3& v2);
-	static SIMDFloat3 Cross(const SIMDFloat3& v1, const SIMDFloat3& v2);
-	static SIMDFloat3 Normalize(const SIMDFloat3& v);
+	static SIMDFloat3 Dot(SIMDFloat3 v1, SIMDFloat3 v2);
+	static SIMDFloat3 Cross(SIMDFloat3 v1, SIMDFloat3 v2);
+	static SIMDFloat3 Normalize(SIMDFloat3 v);
 };
 std::ostream& operator<<(std::ostream& stream, const SIMDFloat3& v);
 
@@ -60,12 +60,12 @@ inline SIMDFloat3::SIMDFloat3(const __m128 e) : m(e)
 {
 }
 
-inline SIMDFloat3 SIMDFloat3::operator+(const SIMDFloat3& v) const
+inline SIMDFloat3 SIMDFloat3::operator+(const SIMDFloat3 v) const
 {
 	return SIMDFloat3(_mm_add_ps(m, v.m));
 }
 
-inline SIMDFloat3& SIMDFloat3::operator+=(const SIMDFloat3& v)
+inline SIMDFloat3& SIMDFloat3::operator+=(const SIMDFloat3 v)
 {
 	*this = SIMDFloat3(_mm_add_ps(m, v.m)); ;
 	return *this;
@@ -76,12 +76,12 @@ inline SIMDFloat3 SIMDFloat3::operator+() const
 	return *this;
 }
 
-inline SIMDFloat3 SIMDFloat3::operator-(const SIMDFloat3& v) const
+inline SIMDFloat3 SIMDFloat3::operator-(const SIMDFloat3 v) const
 {
 	return SIMDFloat3(_mm_sub_ps(m, v.m));
 }
 
-inline SIMDFloat3& SIMDFloat3::operator-=(const SIMDFloat3& v)
+inline SIMDFloat3& SIMDFloat3::operator-=(const SIMDFloat3 v)
 {
 	*this = SIMDFloat3(_mm_sub_ps(m, v.m));
 	return *this;
@@ -119,7 +119,7 @@ inline SIMDFloat3& SIMDFloat3::operator/=(const float k)
 	return *this;
 }
 
-inline bool SIMDFloat3::equal(const SIMDFloat3& v, const float epsilon) const
+inline bool SIMDFloat3::equal(const SIMDFloat3 v, const float epsilon) const
 {
 	__m128 sub = _mm_sub_ps(m, v.m);
 
@@ -166,13 +166,13 @@ inline float SIMDFloat3::storeValue(int _index) const
 	return num[_index];
 }
 
-inline SIMDFloat3 SIMDFloat3::Dot(const SIMDFloat3& v1, const SIMDFloat3& v2)
+inline SIMDFloat3 SIMDFloat3::Dot(const SIMDFloat3 v1, const SIMDFloat3 v2)
 {
 	return SIMDFloat3(_mm_dp_ps(v1.m, v2.m, 0b00111111));
 }
 
 
-inline SIMDFloat3 SIMDFloat3::Cross(const SIMDFloat3& v1, const SIMDFloat3& v2)
+inline SIMDFloat3 SIMDFloat3::Cross(const SIMDFloat3 v1, const SIMDFloat3 v2)
 {
 	float n1[4] = { v1.storeValue(0),  v1.storeValue(1),  v1.storeValue(2) };
 	float n2[4] = { v2.storeValue(0),  v2.storeValue(1),  v2.storeValue(2) };
@@ -189,12 +189,12 @@ inline SIMDFloat3 SIMDFloat3::Cross(const SIMDFloat3& v1, const SIMDFloat3& v2)
 	return SIMDFloat3(cross);
 }
 
-inline SIMDFloat3 SIMDFloat3::Normalize(const SIMDFloat3& v)
+inline SIMDFloat3 SIMDFloat3::Normalize(const SIMDFloat3 v)
 {
 	return SIMDFloat3(_mm_div_ps(v.m, v.length().m));
 }
 
-inline std::ostream& operator<<(std::ostream& stream, const SIMDFloat3& v)
+inline std::ostream& operator<<(std::ostream& stream, const SIMDFloat3 v)
 {
 	float num[4];
 	_mm_store_ps(num, v.m);
