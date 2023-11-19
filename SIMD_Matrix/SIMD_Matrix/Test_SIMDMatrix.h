@@ -27,6 +27,38 @@ TEST_CASE("SIMDMatrix4 zero matrix construct")
 	CHECK(zeroMat.storeValue(3, 3) == 0);
 }
 
+
+TEST_CASE("SIMDMatrix4 construct init SIMDMatrix4")
+{
+	SIMDMatrix4 m(
+		1.3, 2, 3, 4,
+		5, 6, 7, 8,
+		9, 10, 11, 12,
+		13, 14, 0, -23.4f
+	);
+	SIMDMatrix4 mat(m);
+
+	CHECK(mat.storeValue(0, 0) == doctest::Approx(1.3).epsilon(0.01));
+	CHECK(mat.storeValue(0, 1) == doctest::Approx(2).epsilon(0.01));
+	CHECK(mat.storeValue(0, 2) == doctest::Approx(3).epsilon(0.01));
+	CHECK(mat.storeValue(0, 3) == doctest::Approx(4).epsilon(0.01));
+
+	CHECK(mat.storeValue(1, 0) == doctest::Approx(5).epsilon(0.01));
+	CHECK(mat.storeValue(1, 1) == doctest::Approx(6).epsilon(0.01));
+	CHECK(mat.storeValue(1, 2) == doctest::Approx(7).epsilon(0.01));
+	CHECK(mat.storeValue(1, 3) == doctest::Approx(8).epsilon(0.01));
+
+	CHECK(mat.storeValue(2, 0) == doctest::Approx(9).epsilon(0.01));
+	CHECK(mat.storeValue(2, 1) == doctest::Approx(10).epsilon(0.01));
+	CHECK(mat.storeValue(2, 2) == doctest::Approx(11).epsilon(0.01));
+	CHECK(mat.storeValue(2, 3) == doctest::Approx(12).epsilon(0.01));
+
+	CHECK(mat.storeValue(3, 0) == doctest::Approx(13).epsilon(0.01));
+	CHECK(mat.storeValue(3, 1) == doctest::Approx(14).epsilon(0.01));
+	CHECK(mat.storeValue(3, 2) == doctest::Approx(0).epsilon(0.01));
+	CHECK(mat.storeValue(3, 3) == doctest::Approx(-23.4f).epsilon(0.01));
+}
+
 TEST_CASE("SIMDMatrix4 each element construct")
 {
 	SIMDMatrix4 mat(
@@ -116,17 +148,11 @@ TEST_CASE("SIMDMatrix4 each SIMDFloat4 construct")
 
 TEST_CASE("SIMDMatrix4 each __m128 construct")
 {
-	float num[4][4] = {
-		{1.3, 2, 3, 4},
-		{5, 6, 7, 8},
-		{9, 10, 11, 12},
-		{13, 14, 0, -23.4f}
-	};
 	__m128 m[4];
-	for (int i = 0; i < 4; i++)
-	{
-		m[i] = _mm_load_ps(num[i]);
-	}
+	m[0] = _mm_set_ps(4, 3, 2, 1.3);
+	m[1] = _mm_set_ps(8, 7, 6, 5);
+	m[2] = _mm_set_ps(12, 11, 10, 9);
+	m[3] = _mm_set_ps(-23.4, 0, 14, 13);
 
 	SIMDMatrix4 mat(m);
 
@@ -708,7 +734,7 @@ TEST_CASE("SIMDMatrix4 / float operator")
 	CHECK(mat2.storeValue(3, 3) == doctest::Approx(-23.4 / -2.5).epsilon(0.01));
 }
 
-TEST_CASE("SIMDMatrix4 / float operator")
+TEST_CASE("SIMDMatrix4 /= float operator")
 {
 	SIMDMatrix4 mat(
 		1.3, 2, 3, 4,
@@ -752,4 +778,33 @@ TEST_CASE("SIMDMatrix4 det calc")
 	);
 
 	CHECK(mat.det() == doctest::Approx(-28.64).epsilon(0.01));
+}
+
+TEST_CASE("storeValue() checked")
+{
+	SIMDMatrix4 mat{};
+	mat.v[0] = _mm_set_ps(4, 3, 2, 1);
+	mat.v[1] = _mm_set_ps(-1, -2, -3, -4);
+	mat.v[2] = _mm_set_ps(0, -.5, 1.5, -2);
+	mat.v[3] = _mm_set_ps(-2, 2.5, -3, 3.5);
+
+	CHECK(mat.storeValue(0, 0) == 1);
+	CHECK(mat.storeValue(0, 1) == 2);
+	CHECK(mat.storeValue(0, 2) == 3);
+	CHECK(mat.storeValue(0, 3) == 4);
+
+	CHECK(mat.storeValue(1, 0) == -4);
+	CHECK(mat.storeValue(1, 1) == -3);
+	CHECK(mat.storeValue(1, 2) == -2);
+	CHECK(mat.storeValue(1, 3) == -1);
+
+	CHECK(mat.storeValue(2, 0) == -2);
+	CHECK(mat.storeValue(2, 1) == 1.5);
+	CHECK(mat.storeValue(2, 2) == -.5);
+	CHECK(mat.storeValue(2, 3) == 0);
+
+	CHECK(mat.storeValue(3, 0) == 3.5);
+	CHECK(mat.storeValue(3, 1) == -3);
+	CHECK(mat.storeValue(3, 2) == 2.5);
+	CHECK(mat.storeValue(3, 3) == -2);
 }
