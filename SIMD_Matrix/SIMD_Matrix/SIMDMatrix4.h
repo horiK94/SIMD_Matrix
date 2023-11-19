@@ -16,7 +16,7 @@ struct SIMDMatrix4
 		float m31, float m32, float m33, float m34,
 		float m41, float m42, float m43, float m44);
 	SIMDMatrix4(const float(&m)[4][4]);
-	SIMDMatrix4(const SIMDFloat4& v1, const SIMDFloat4& v2, const SIMDFloat4& v3, const SIMDFloat4& v4);
+	SIMDMatrix4(SIMDFloat4 v1, SIMDFloat4 v2, SIMDFloat4 v3, SIMDFloat4 v4);
 	SIMDMatrix4(const __m128* v);
 	static SIMDMatrix4 Identity();
 	SIMDMatrix4 operator+(const SIMDMatrix4& m) const;
@@ -30,7 +30,7 @@ struct SIMDMatrix4
 	SIMDMatrix4& operator*=(float k);
 	SIMDMatrix4 operator *(const SIMDMatrix4& m) const;
 	SIMDMatrix4& operator*=(const SIMDMatrix4& m);
-	friend SIMDFloat4 operator*(const SIMDFloat4& v, const SIMDMatrix4& m);
+	friend SIMDFloat4 operator*(SIMDFloat4 v, SIMDMatrix4 m);
 	friend SIMDFloat4& operator*=(const SIMDFloat4& v, const SIMDMatrix4& m);
 	SIMDMatrix4 operator/(float k) const;
 	SIMDMatrix4& operator/=(float k);
@@ -70,7 +70,7 @@ inline SIMDMatrix4::SIMDMatrix4(const float(&mat)[4][4])
 		v[i] = _mm_set_ps(mat[i][3], mat[i][2], mat[i][1], mat[i][0]);
 	}
 }
-inline SIMDMatrix4::SIMDMatrix4(const SIMDFloat4& v1, const SIMDFloat4& v2, const SIMDFloat4& v3, const SIMDFloat4& v4)
+inline SIMDMatrix4::SIMDMatrix4(const SIMDFloat4 v1, const SIMDFloat4 v2, const SIMDFloat4 v3, const SIMDFloat4 v4)
 {
 	v[0] = v1.m;
 	v[1] = v2.m;
@@ -183,7 +183,7 @@ inline SIMDMatrix4& SIMDMatrix4::operator*=(const float k)
 	return *this;
 }
 
-inline SIMDFloat4 operator*(const SIMDFloat4& v, const SIMDMatrix4& m)
+inline SIMDFloat4 operator*(const SIMDFloat4 v, const SIMDMatrix4 m)
 {
 	__m128 mVert[4];
 	for (int i = 0; i < 4; i++)
