@@ -74,5 +74,8 @@
     <ClInclude Include="Test_SIMDMatrix.h">
       <Filter>Test\SIMD</Filter>
     </ClInclude>
+    <ClInclude Include="C:\Users\horiK\Desktop\nanobench\src\include\nanobench.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

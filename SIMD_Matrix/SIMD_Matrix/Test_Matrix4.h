@@ -715,5 +715,5 @@ TEST_CASE("Matrix4 det calc")
 		1, 3, 2, 1.6
 	);
 
-	CHECK(mat.Det() == doctest::Approx(-28.64).epsilon(0.01));
+	CHECK(mat.det() == doctest::Approx(-28.64).epsilon(0.01));
 }

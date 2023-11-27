@@ -32,7 +32,7 @@ struct Matrix4
 	friend Float4& operator*=(const Float4& v, const Matrix4& m);
 	Matrix4 operator/(float k) const;
 	Matrix4& operator/=(float k);
-	float Det() const;
+	float det() const;
 };
 
 inline  Matrix4::Matrix4()
@@ -326,7 +326,7 @@ inline Matrix4& Matrix4::operator/=(float k)
 	return *this;
 }
 
-inline float Matrix4::Det() const
+inline float Matrix4::det() const
 {
 	return m[0][0] * m[1][1] * m[2][2] * m[3][3]
 		- m[0][0] * m[1][1] * m[2][3] * m[3][2]
