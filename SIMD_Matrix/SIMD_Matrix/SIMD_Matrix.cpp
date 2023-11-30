@@ -63,7 +63,7 @@ void benchFloat4()
 		SIMDFloat4 f(1, 2, -3, 0.1);
 		float k = 0.6;
 
-		ankerl::nanobench::Bench().minEpochIterations(100000).run("Float4 Use SIMD when mul", [&] {
+		ankerl::nanobench::Bench().minEpochIterations(200000).run("Float4 Use SIMD when mul", [&] {
 			f *= k;
 			});
 	}
@@ -72,7 +72,7 @@ void benchFloat4()
 		Float4 f(1, 2, -3, 0.1);
 		float k = 0.7;
 
-		ankerl::nanobench::Bench().run("Float4 Not Use SIMD when div", [&] {
+		ankerl::nanobench::Bench().minEpochIterations(400000).run("Float4 Not Use SIMD when div", [&] {
 			f /= k;
 			});
 	}
@@ -101,7 +101,7 @@ void benchFloat4()
 		SIMDFloat4 f(1, 2, -3, 0.1);
 		SIMDFloat4 g(0, 2, -3, 0.1);
 
-		ankerl::nanobench::Bench().minEpochIterations(150000000).run("Float4 Use SIMD when Dot()", [&] {
+		ankerl::nanobench::Bench().minEpochIterations(200000000).run("Float4 Use SIMD when Dot()", [&] {
 			ankerl::nanobench::doNotOptimizeAway([&] {
 				SIMDFloat4::Dot(f, g);
 				});
@@ -112,7 +112,7 @@ void benchFloat4()
 		Float3 f(1, 2, -0.9);
 		Float3 g(0, 2, 0.1);
 
-		ankerl::nanobench::Bench().minEpochIterations(100000000).run("Float3 Not Use SIMD when Cross()", [&] {
+		ankerl::nanobench::Bench().minEpochIterations(200000000).run("Float3 Not Use SIMD when Cross()", [&] {
 			ankerl::nanobench::doNotOptimizeAway([&] {
 				Float3::Cross(f, g);
 				});
@@ -133,7 +133,7 @@ void benchFloat4()
 
 void benchMatrix4()
 {
-	ankerl::nanobench::Bench().minEpochIterations(10000000).run("Matrix4 Not Use SIMD and Use Constuctor", [&] {
+	ankerl::nanobench::Bench().minEpochIterations(20000000).run("Matrix4 Not Use SIMD and Use Constuctor", [&] {
 		ankerl::nanobench::doNotOptimizeAway([&] {
 			Matrix4 mat1(
 				0, 0, 0, 0,
@@ -149,7 +149,7 @@ void benchMatrix4()
 			);
 			});		
 		});
-	ankerl::nanobench::Bench().minEpochIterations(10000000).run("Matrix4 Use SIMD and Use Constuctor", [&] {
+	ankerl::nanobench::Bench().minEpochIterations(20000000).run("Matrix4 Use SIMD and Use Constuctor", [&] {
 		ankerl::nanobench::doNotOptimizeAway([&] {
 			SIMDMatrix4 mat1(
 				0, 0, 0, 0,
@@ -264,7 +264,7 @@ void benchMatrix4()
 			13.1, -5.7, -0.6, -0.3
 		);
 
-		ankerl::nanobench::Bench().minEpochIterations(100000000).run("Matrix4 Use SIMD when Det()", [&] {
+		ankerl::nanobench::Bench().minEpochIterations(200000000).run("Matrix4 Use SIMD when Det()", [&] {
 			ankerl::nanobench::doNotOptimizeAway([&] {
 				mat.det();
 				});

@@ -77,5 +77,23 @@
     <ClInclude Include="C:\Users\horiK\Desktop\nanobench\src\include\nanobench.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Float3.ipp">
+      <Filter>ヘッダー ファイル\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix4.ipp">
+      <Filter>ヘッダー ファイル\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Float4.ipp">
+      <Filter>ヘッダー ファイル\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="SIMDMatrix4.ipp">
+      <Filter>ヘッダー ファイル\SIMD</Filter>
+    </ClInclude>
+    <ClInclude Include="SIMDFloat3.ipp">
+      <Filter>ヘッダー ファイル\SIMD</Filter>
+    </ClInclude>
+    <ClInclude Include="SIMDFloat4.ipp">
+      <Filter>ヘッダー ファイル\SIMD</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
